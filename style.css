@@ -1,5 +1,30 @@
-.box {
-    width: 100px;
-    height: 100px;
-    background-color: brown;
+.game-plate{
+    width: fit-content;
+    height: fit-content;
+}
+
+.circle{
+    width: 6rem;
+    height: 6rem;
+    border-radius: 100px;
+    background-color: azure;
+    /* background-image: url(images/ball-red.svg); */
+
+}
+
+.btn{
+    width: 68px;
+    height: 30px;
+}
+
+.bg-azure{
+    background-color: azure;
+}
+
+.bg-yellow{
+    background-color: yellow;
+}
+
+.bg-green{
+    background-color: green;
 }
