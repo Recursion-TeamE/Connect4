@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" >
     <h1>Connect 4</h1>
     <p>Click columns to play</p>
     <Controller/>

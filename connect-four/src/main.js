@@ -2,10 +2,19 @@ import Vue from 'vue'
 import App from './App.vue'
 import store from './store'
 import './assets/css/styles.css'
+import 'bootstrap/dist/css/bootstrap.css' // add
+import 'bootstrap-vue/dist/bootstrap-vue.css' // add
 
 Vue.config.productionTip = false
 
-new Vue({
+const app = new Vue({
   store,
+  methods:{
+    setBoard: function(boardLength){
+      this.$store.dispatch("setBoard",{boardLength: boardLength})
+    }
+  },
   render: h => h(App),
 }).$mount('#app')
+
+app.setBoard(4)

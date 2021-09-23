@@ -1,31 +1,37 @@
 <template>
-  <div class="container">
-    <p>Board Component ---></p>
-    <div class="board">
-      <BoardFrame/>
+  <div>
+
+    <div class="d-flex" v-for="(row, rowIndex) in board" v-bind:key="rowIndex">
+      <div
+        class="ball"
+        v-for="(col, colIndex) in row"
+        v-bind:key="colIndex"
+      >
+      <!-- {{ col.svg }} -->
+      </div>
     </div>
   </div>
 </template>
 
-<script> 
-
-import BoardFrame from './BoardFrame.vue'
-
+<script>
+import { mapState } from "vuex";
+import BallRedSVG from "../assets/images/ball-red.svg"
+console.log(BallRedSVG)
 export default {
   components: {
-    BoardFrame,
+    BallRedSVG,
   },
-  props: {
-  },
-  data(){
-    return{
-
-    }
+  props: {},
+  data() {
+    return {
+    };
   },
   computed: {
+    ...mapState(["board"]),
   },
   methods: {
 
-  }
-}
+  },
+};
 </script>
+
