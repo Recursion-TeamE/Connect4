@@ -1,23 +1,24 @@
+# connect-four
 
+## Project setup
+```
+npm install
+```
 
-1. HTML, 
-    - top (game start)
-    - setting(n , player or AI) 
-    - game play  #1
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
 
-2. js event , 上から積み上げるやつ
-3. だれが勝ったか, 4つ並んだか確認
+### Compiles and minifies for production
+```
+npm run build
+```
 
+### Lints and fixes files
+```
+npm run lint
+```
 
-# board
-vue > data > 二次元配列
-
-- n x n
-- AI or 複数 
-
-
-[   () ()  ()
-    [ , , , ] #1
-    [ , , , ] #2
-    [ , , , ] #3
-]
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
