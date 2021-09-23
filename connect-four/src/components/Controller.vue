@@ -1,37 +1,32 @@
 <template>
   <div>
     <p>--------- Controller Component ----------</p>
-    <Board/>
-
-
+    <Ball :x="200" :y="165" />
+    <Board />
 
     <div class="">
-
       <div class="d-flex">
         <div>ball</div>
       </div>
-
     </div>
   </div>
-  
 </template>
+
 <script>
+import Board from "./Board.vue";
+import Ball from "./Ball.vue";
 
-import Board from './Board.vue'
-
-export default{
+export default {
   components: {
     Board,
+    Ball,
   },
   data() {
-    return{
-    }
+    return {};
   },
-  computed: {
-  },
-  methods: {
-  }
-}
+  computed: {},
+  methods: {},
+};
 </script>
 
 

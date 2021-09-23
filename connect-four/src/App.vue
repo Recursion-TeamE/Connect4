@@ -1,20 +1,19 @@
 <template>
-  <div id="app" >
+  <div id="app">
     <h1>Connect 4</h1>
     <p>Click columns to play</p>
-    <Controller/>
+    <Controller />
   </div>
 </template>
 
-<script> 
-
-import Controller from './components/Controller.vue'
+<script>
+import Controller from "./components/Controller.vue";
 
 export default {
-  name: 'app',
+  name: "app",
   components: {
-    Controller
+    Controller,
   },
-}
+};
 </script>
 
