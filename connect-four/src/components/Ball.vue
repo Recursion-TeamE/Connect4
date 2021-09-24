@@ -7,19 +7,11 @@
       }"
       @click="fall(260)"
     />
-    <BallRedSVG
-      class="ball-root"
-      :style="{
-        transform: `translate(${x + 100 + dx}px, ${y + dy}px)`,
-      }"
-      @click="fall(130)"
-    />
   </div>
 </template>
 
 <script>
-import BallYellowSVG from "../assets/images/ball-yellow.svg";
-import BallRedSVG from "../assets/images/ball-red.svg";
+import BallYellowSVG from "../assets/images/ball-yellow.min.svg";
 
 export default {
   name: "fallingBall",
@@ -35,7 +27,6 @@ export default {
   },
   components: {
     BallYellowSVG,
-    BallRedSVG,
   },
   computed: {},
   methods: {

@@ -11,7 +11,7 @@
 
 <script>
 import { mapState } from "vuex";
-import BallRedSVG from "../assets/images/ball-red.svg";
+import BallRedSVG from "../assets/images/ball-red.min.svg";
 console.log(BallRedSVG);
 export default {
   components: {
