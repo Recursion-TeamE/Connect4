@@ -1,17 +1,12 @@
 <template>
   <div id="app">
-    <TopPage />
-    <router-view :key="$route.path"/>
+    <router-view :key="$route.path" />
   </div>
 </template>
 
 <script>
-
-import TopPage from './view/TopPage.vue'
-
-export default{
-  components: {
-    TopPage,
-  },
-}
+export default {
+  name: "App",
+  components: {},
+};
 </script>
