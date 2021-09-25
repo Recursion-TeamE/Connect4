@@ -1,24 +1,20 @@
 <template>
   <div id="app">
-    <h1>Connect 4</h1>
-    <p>Click columns to play</p>
-    <Ball :x="200" :y="165" />
-    <Controller />
+    <TopPage />
+    <router-view :key="$route.path"/>
   </div>
 </template>
 
 <script>
-import Controller from "./components/Controller.vue";
-import Ball from "./components/Ball.vue";
-// import BallTest from "./components/BallTest.vue";
+
+import TopPage from './view/TopPage.vue'
 
 export default {
   name: "app",
   components: {
-    Controller,
-    Ball,
-    // BallTest, 
+    TopPage,
   },
 };
 </script>
 
+n
