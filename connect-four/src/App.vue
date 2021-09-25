@@ -2,9 +2,6 @@
   <div id="app">
     <h1>Connect 4</h1>
     <p>Click columns to play</p>
-    <!--
-    <BallTest :x="200" :y="165" />
-    -->
     <Ball :x="200" :y="165" />
     <Controller />
   </div>
@@ -20,7 +17,7 @@ export default {
   components: {
     Controller,
     Ball,
-    // BallTest,
+    // BallTest, 
   },
 };
 </script>

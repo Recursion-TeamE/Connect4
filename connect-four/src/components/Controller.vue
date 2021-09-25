@@ -1,22 +1,18 @@
 <template>
   <div>
-    <p>--------- Controller Component ----------</p>
+    <BallSetters />
     <Board />
-
-    <div class="">
-      <div class="d-flex">
-        <div>ball</div>
-      </div>
-    </div>
   </div>
 </template>
 
 <script>
 import Board from "./Board.vue";
+import BallSetters from "./BallSetters.vue"
 
 export default {
   components: {
     Board,
+    BallSetters,
   },
   data() {
     return {};

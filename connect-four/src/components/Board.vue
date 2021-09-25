@@ -1,9 +1,12 @@
 <template>
   <div>
     <div class="d-flex" v-for="(row, rowIndex) in board" v-bind:key="rowIndex">
-      <div class="ball" v-for="(col, colIndex) in row" v-bind:key="colIndex">
-        <!-- {{ col.svg }} -->
-        <BallRedSVG />
+      <div
+        class="ball"
+        v-for="(col, colIndex) in row"
+        v-bind:key="colIndex"
+      >
+        <BallSVGVue v-if="col.color !== null" :color="col.color"></BallSVGVue>
       </div>
     </div>
   </div>
@@ -11,11 +14,11 @@
 
 <script>
 import { mapState } from "vuex";
-import BallRedSVG from "../assets/images/ball-red.min.svg";
-console.log(BallRedSVG);
+import BallSVGVue from "./BallSVG";
+
 export default {
   components: {
-    BallRedSVG,
+    BallSVGVue,
   },
   props: {},
   data() {
@@ -24,7 +27,9 @@ export default {
   computed: {
     ...mapState(["board"]),
   },
-  methods: {},
+  methods: {
+    
+  },
 };
 </script>
 

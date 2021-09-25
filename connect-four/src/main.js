@@ -17,4 +17,4 @@ const app = new Vue({
 	render: h => h(App),
 }).$mount('#app')
 
-app.setBoard(4)
+app.setBoard(5)
