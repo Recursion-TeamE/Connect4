@@ -9,12 +9,9 @@
 
 import TopPage from './view/TopPage.vue'
 
-export default {
-  name: "app",
+export default{
   components: {
     TopPage,
   },
-};
+}
 </script>
-
-n

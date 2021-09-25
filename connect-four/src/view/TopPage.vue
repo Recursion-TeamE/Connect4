@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex flex-column justify-content-center align-items-center m-5">
+  <div class="vh-100 d-flex flex-column justify-content-center align-items-center m-5">
     <div class="title mt-5">
       <h1>Connect 4</h1>
     </div>

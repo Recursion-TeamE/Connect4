@@ -1,18 +1,20 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import SettingPage from '../view/SettingPage.vue'
 
-Vue.use(VueRouter);
+Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/setting',
     name: 'SettingPage',
-    component: () => import("./view/SettingPage.vue"),
+    component: SettingPage,
   }
 ]
 
 const router = new VueRouter({
-  routes,
-});
+  mode: 'history',
+  routes
+})
 
-export default router;
+export default router
