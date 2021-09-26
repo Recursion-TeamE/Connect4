@@ -31,13 +31,14 @@ export default {
 
 <style scoped>
 #connect4 {
-  filter: drop-shadow(4px 4px 4px #363636);
+  filter: drop-shadow(4px 4px 4px #1b4583);
 }
 
 .btn{
   font-size: 1.5rem;
   padding: 10px;
   border-radius: 10px;
+  filter: drop-shadow(6px 6px 5px #1b4583);
 }
 
 .bg-image {
