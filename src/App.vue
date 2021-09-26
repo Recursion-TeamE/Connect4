@@ -15,3 +15,11 @@ export default {
   },
 };
 </script>
+
+<style>
+/* Google fonts */
+@import url("https://fonts.googleapis.com/css2?family=Varela+Round&display=swap");
+#app {
+  font-family: "Varela Round", sans-serif;
+}
+</style>

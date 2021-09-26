@@ -1,7 +1,16 @@
 <template>
-  <div class="vh-100 d-flex flex-column justify-content-center align-items-center h-75">
+  <div
+    class="
+      vh-100
+      d-flex
+      flex-column
+      justify-content-center
+      align-items-center
+      h-75
+    "
+  >
     <div class="title text-center">
-      <h1 class="pt-5">CHOOSE GAME MODE</h1>
+      <SettingSVG class="pt-5" />
     </div>
     <div class="d-flex justify-content-between align-items-center h-50">
       <div class="row">
@@ -23,7 +32,12 @@
 </template>
 
 <script>
-export default {};
+import SettingSVG from "@/components/SettingSVG.vue";
+export default {
+  components: {
+    SettingSVG,
+  },
+};
 </script>
 
 <style scoped>
