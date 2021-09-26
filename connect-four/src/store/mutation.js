@@ -45,5 +45,13 @@ export default {
             store.commit("setBall", { rowIndex: rowIndex + 1, colIndex: colIndex });
         }, 500);
 
+    },
+    /**
+     * @payload {
+     *     players: Array
+     * }
+     */
+    setPlayers(state, {players}){
+        state.players = players
     }
 }

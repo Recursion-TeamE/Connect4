@@ -1,13 +1,12 @@
 export class Player {
-    constructor(color, svg) {
-        // this.name
-        this.color = color
-        this.svg = svg
-        // this.isAI = false
-    }
+	constructor(name = "", color) {
+
+		this.name = name;
+		this.color = color;
+	}
 }
 export class Ball {
-    constructor(color = null) {
-        this.color = color
-    }
+	constructor(color = null) {
+		this.color = color
+	}
 }

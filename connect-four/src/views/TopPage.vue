@@ -7,12 +7,11 @@
       justify-content-start
       align-items-center
       bg-image
-      m-5
+      
     "
   >
     <div class="title">
-      <TitleSvg width="600" id="connect4" />
-      <!-- <h1>Connect 4</h1> -->
+      <TitleSvg width="800" id="connect4" />
     </div>
     <router-link to="/setting"><button class="btn btn-primary">Game Start</button></router-link>
     
@@ -20,7 +19,7 @@
 </template>
 
 <script>
-import TitleSvg from "@/assets/images/title.min.svg";
+import TitleSvg from "@/assets/images/title2.min.svg";
 
 export default {
   components: {
@@ -33,6 +32,12 @@ export default {
 <style scoped>
 #connect4 {
   filter: drop-shadow(4px 4px 4px #363636);
+}
+
+.btn{
+  font-size: 1.5rem;
+  padding: 10px;
+  border-radius: 10px;
 }
 
 .bg-image {
