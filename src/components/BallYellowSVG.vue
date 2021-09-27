@@ -2,14 +2,9 @@
   <div>
     <svg
       viewBox="0 0 200 200"
+      width="200"
+      height="200"
       xmlns="http://www.w3.org/2000/svg"
-      xml:space="preserve"
-      style="
-        fill-rule: evenodd;
-        clip-rule: evenodd;
-        stroke-linejoin: round;
-        stroke-miterlimit: 2;
-      "
     >
       <defs>
         <linearGradient id="gradient07" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -36,14 +31,3 @@
     </svg>
   </div>
 </template>
-
-<script>
-export default {
-  props: {
-    color: {
-      type: String,
-      required: true,
-    },
-  },
-};
-</script>

@@ -2,29 +2,24 @@
   <div>
     <svg
       viewBox="0 0 200 200"
+      width="200"
+      height="200"
       xmlns="http://www.w3.org/2000/svg"
-      xml:space="preserve"
-      style="
-        fill-rule: evenodd;
-        clip-rule: evenodd;
-        stroke-linejoin: round;
-        stroke-miterlimit: 2;
-      "
     >
       <defs>
         <linearGradient id="gradient10" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stop-color="#00b100" />
+          <stop offset="0%" stop-color="#00a000" />
           <stop offset="100%" stop-color="#7efa7e" />
         </linearGradient>
         <linearGradient id="gradient11" x1="0%" y1="0%" x2="0%" y2="100%">
           <stop offset="0%" stop-color="#d3fed3" />
-          <stop offset="50%" stop-color="#00cc00" />
-          <stop offset="100%" stop-color="#00b400" />
+          <stop offset="50%" stop-color="#00bb00" />
+          <stop offset="100%" stop-color="#00a300" />
         </linearGradient>
         <linearGradient id="gradient12" x1="0%" y1="0%" x2="0%" y2="100%">
           <stop offset="0%" stop-color="#8cfa8c" />
-          <stop offset="70%" stop-color="#00ab00" />
-          <stop offset="100%" stop-color="#00db00" />
+          <stop offset="70%" stop-color="#009a00" />
+          <stop offset="100%" stop-color="#00ca00" />
         </linearGradient>
       </defs>
 
@@ -36,14 +31,3 @@
     </svg>
   </div>
 </template>
-
-<script>
-export default {
-  props: {
-    color: {
-      type: String,
-      required: true,
-    },
-  },
-};
-</script>

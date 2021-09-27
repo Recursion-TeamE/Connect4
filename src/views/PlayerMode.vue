@@ -9,7 +9,7 @@
       align-items-center
     "
   >
-    <div class="svg-container">
+    <div class="svg-container mt-3">
       <PlayerModeSVG class="svg-text" />
     </div>
     <div>
@@ -43,7 +43,7 @@
         >
           <div class="col-6">
             <label class="form-check-label" for="playersName"
-              >Name</label
+              >Player's Name</label
             >
             <input
               v-model="player.name"
@@ -54,7 +54,7 @@
           </div>
           <div class="col-6" @change="initializeColors(index, player.color)">
             <label class="form-check-label" for="playersColer"
-              >Color: {{ player.color }}</label
+              >Player's Color</label
             >
             <select
               class="form-select"
@@ -62,20 +62,24 @@
               aria-label="Default select example"
               id="playersColer"
             >
-              <option value="???" selected>Your Color</option>
-              <option value="Red" v-if="isRedUnselected">Red</option>
-              <option value="Blue" v-if="isBlueUnselected">Blue</option>
-              <option value="Yellow" v-if="isYellowUnselected">Yellow</option>
-              <option value="Green" v-if="isGreenUnselected">Green</option>
+              <option value="???" selected>Coose Color</option>
+              <option value="Red" v-bind:disabled="isRedSelected">Red</option>
+              <option value="Blue" v-bind:disabled="isBlueSelected">
+                Blue
+              </option>
+              <option value="Yellow" v-bind:disabled="isYellowSelected">
+                Yellow
+              </option>
+              <option value="Green" v-bind:disabled="isGreenSelected">
+                Green
+              </option>
             </select>
           </div>
         </div>
       </form>
     </div>
     <div>
-      <button class="btn btn-primary mt-3" @click="test()">
-        Game Start
-      </button>
+      <button class="btn btn-primary mt-3" @click="test()">Game Start</button>
     </div>
   </div>
 </template>
@@ -91,10 +95,10 @@ export default {
       players: [new Player(), new Player()],
       //   isSelected: false,
       selectedColors: ["", "", "", ""],
-      isRedUnselected: true,
-      isBlueUnselected: true,
-      isYellowUnselected: true,
-      isGreenUnselected: true,
+      isRedSelected: false,
+      isBlueSelected: false,
+      isYellowSelected: false,
+      isGreenSelected: false,
     };
   },
   components: {
@@ -120,39 +124,39 @@ export default {
     initializeColors: function (index, color) {
       switch (this.selectedColors[index]) {
         case "Red":
-          this.isRedUnselected = true;
+          this.isRedSelected = false;
           break;
         case "Blue":
-          this.isBlueUnselected = true;
+          this.isBlueSelected = false;
           break;
         case "Yellow":
-          this.isYellowUnselected = true;
+          this.isYellowSelected = false;
           break;
         case "Green":
-          this.isGreenUnselected = true;
+          this.isGreenSelected = false;
           break;
       }
 
       switch (color) {
         case "Red":
-          this.isRedUnselected = false;
+          this.isRedSelected = true;
           this.selectedColors[index] = "Red";
-          this.player.color = "???";
+          this.player.color = "Red";
           break;
         case "Blue":
-          this.isBlueUnselected = false;
+          this.isBlueSelected = true;
           this.selectedColors[index] = "Blue";
-          this.player.color = "???";
+          this.player.color = "Blue";
           break;
         case "Yellow":
-          this.isYellowUnselected = false;
+          this.isYellowSelected = true;
           this.selectedColors[index] = "Yellow";
-          this.player.color = "???";
+          this.player.color = "Yellow";
           break;
         case "Green":
-          this.isGreenUnselected = false;
+          this.isGreenSelected = true;
           this.selectedColors[index] = "Green";
-          this.player.color = "???";
+          this.player.color = "Green";
           break;
       }
     },

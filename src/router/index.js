@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import SettingPage from '../views/SettingPage.vue'
 import TopPage from '../views/TopPage.vue'
 import PlayerMode from "../views/PlayerMode.vue";
+import Board from "../components/Board.vue"
 
 Vue.use(VueRouter)
 
@@ -21,7 +22,12 @@ const routes = [
 		path: '/setting/playerMode',
 		name: 'playerMode',
 		component: PlayerMode,
-	}
+	},
+	{
+		path: '/setting/playerMode/board',
+		name: 'board',
+		component: Board,
+	},
 ]
 
 const router = new VueRouter({
