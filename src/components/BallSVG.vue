@@ -13,18 +13,18 @@
     >
       <defs>
         <linearGradient id="gradient01" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stop-color="#555555" />
+          <stop offset="0%" stop-color="#1e1e1e" />
           <stop offset="100%" stop-color="#ffffff" />
         </linearGradient>
         <linearGradient id="gradient02" x1="0%" y1="0%" x2="0%" y2="100%">
           <stop offset="0%" stop-color="#ffffff" />
-          <stop offset="50%" stop-color="#505050" />
-          <stop offset="100%" stop-color="#505050" />
+          <stop offset="50%" stop-color="#212121" />
+          <stop offset="100%" stop-color="#393939" />
         </linearGradient>
         <linearGradient id="gradient03" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stop-color="#dddddd" />
-          <stop offset="50%" stop-color="#000000" />
-          <stop offset="100%" stop-color="#0000000" />
+          <stop offset="0%" stop-color="#b4b4b4" />
+          <stop offset="70%" stop-color="#242424" />
+          <stop offset="100%" stop-color="#515151" />
         </linearGradient>
       </defs>
 

@@ -32,3 +32,14 @@
   border: 2px rgb(161, 141, 96) solid;
   border-radius: 50%;
 }
+
+/* svg */
+.svg-text {
+  display: block;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  filter: drop-shadow(4px 4px 4px #1b4583);
+}

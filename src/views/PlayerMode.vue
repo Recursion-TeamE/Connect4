@@ -1,64 +1,79 @@
 <template>
-  <div class="text-center d-flex flex-column">
-    <PlayerModeSVG class="pt-5" />
-    <form class="d-flex flex-column align-items-center">
-      <div class="col-8 mb-3">
-        <label for="boardSize" class="form-label">Board Size</label>
-        <input
-          type="number"
-          min="4"
-          class="form-control text-center"
-          id="boardSize"
-        />
-      </div>
-      <div class="col-8 mb-3">
-        <label class="form-label">Number of Players</label>
-        <input
-          @change="changeNumberOfPlayers($event)"
-          type="number"
-          min="1"
-          max="4"
-          class="form-control text-center"
-        />
-      </div>
-      <h2>Player Setting</h2>
-      <div
-        v-for="(player, index) in players"
-        v-bind:key="player.index"
-        class="d-flex justify-content-around col-8 mb-3"
-      >
-        <div class="col-4">
-          <label class="form-check-label" for="playersName"
-            >Player's Name</label
-          >
+  <div
+    class="
+      vh-100
+      text-center
+      d-flex
+      flex-column
+      justify-content-center
+      align-items-center
+    "
+  >
+    <div class="svg-container">
+      <PlayerModeSVG class="svg-text" />
+    </div>
+    <div>
+      <form class="d-flex flex-column align-items-center">
+        <div class="col-8 mt-5">
+          <label for="boardSize" class="form-label">Board Size</label>
           <input
-            v-model="player.name"
-            type="text"
+            type="number"
+            min="4"
             class="form-control text-center"
-            id="playersName"
+            id="boardSize"
           />
         </div>
-        <div @change="initializeColors(index, player.color)">
-          <label class="form-check-label" for="playersColer"
-            >Player's Color: {{ player.color }}</label
-          >
-          <select
-            class="form-select"
-            v-model="player.color"
-            aria-label="Default select example"
-            id="playersColer"
-          >
-            <option value="?" selected>Select Your Color</option>
-            <option value="red" v-if="isRedUnselected">Red</option>
-            <option value="blue" v-if="isBlueUnselected">Blue</option>
-            <option value="yellow" v-if="isYellowUnselected">Yellow</option>
-            <option value="green" v-if="isGreenUnselected">Green</option>
-          </select>
+        <div class="col-8 mt-3">
+          <label class="form-label">Number of Players</label>
+          <input
+            @change="changeNumberOfPlayers($event)"
+            type="number"
+            min="1"
+            max="4"
+            class="form-control text-center"
+          />
         </div>
-      </div>
-    </form>
+        <div class="my-3">
+          <h2>Player Setting</h2>
+        </div>
+        <div
+          v-for="(player, index) in players"
+          v-bind:key="player.index"
+          class="d-flex justify-content-around col-10 mb-3"
+        >
+          <div class="col-6">
+            <label class="form-check-label" for="playersName"
+              >Name</label
+            >
+            <input
+              v-model="player.name"
+              type="text"
+              class="form-control text-center"
+              id="playersName"
+            />
+          </div>
+          <div class="col-6" @change="initializeColors(index, player.color)">
+            <label class="form-check-label" for="playersColer"
+              >Color: {{ player.color }}</label
+            >
+            <select
+              class="form-select"
+              v-model="player.color"
+              aria-label="Default select example"
+              id="playersColer"
+            >
+              <option value="???" selected>Your Color</option>
+              <option value="Red" v-if="isRedUnselected">Red</option>
+              <option value="Blue" v-if="isBlueUnselected">Blue</option>
+              <option value="Yellow" v-if="isYellowUnselected">Yellow</option>
+              <option value="Green" v-if="isGreenUnselected">Green</option>
+            </select>
+          </div>
+        </div>
+      </form>
+    </div>
     <div>
-      <button class="col-3 mt-5 btn btn-primary" @click="test()">
+      <button class="btn btn-primary mt-3" @click="test()">
         Game Start
       </button>
     </div>
@@ -104,40 +119,40 @@ export default {
     // },
     initializeColors: function (index, color) {
       switch (this.selectedColors[index]) {
-        case "red":
+        case "Red":
           this.isRedUnselected = true;
           break;
-        case "blue":
+        case "Blue":
           this.isBlueUnselected = true;
           break;
-        case "yellow":
+        case "Yellow":
           this.isYellowUnselected = true;
           break;
-        case "green":
+        case "Green":
           this.isGreenUnselected = true;
           break;
       }
 
       switch (color) {
-        case "red":
+        case "Red":
           this.isRedUnselected = false;
-          this.selectedColors[index] = "red";
-          this.player.color = "?";
+          this.selectedColors[index] = "Red";
+          this.player.color = "???";
           break;
-        case "blue":
+        case "Blue":
           this.isBlueUnselected = false;
-          this.selectedColors[index] = "blue";
-          this.player.color = "?";
+          this.selectedColors[index] = "Blue";
+          this.player.color = "???";
           break;
-        case "yellow":
+        case "Yellow":
           this.isYellowUnselected = false;
-          this.selectedColors[index] = "yellow";
-          this.player.color = "?";
+          this.selectedColors[index] = "Yellow";
+          this.player.color = "???";
           break;
-        case "green":
+        case "Green":
           this.isGreenUnselected = false;
-          this.selectedColors[index] = "green";
-          this.player.color = "?";
+          this.selectedColors[index] = "Green";
+          this.player.color = "???";
           break;
       }
     },
@@ -149,13 +164,18 @@ export default {
 h2 {
   color: rgb(0, 72, 139);
   stroke-linejoin: round;
-  filter: drop-shadow(4px 4px 4px #0090ff);
+  filter: drop-shadow(2px 2px 2px #29a2ff);
 }
 
 .btn {
   font-size: 1.5rem;
-  padding: 10px;
-  border-radius: 10px;
+  padding: 0.5rem;
+  border-radius: 0.8rem;
   filter: drop-shadow(6px 6px 5px #1b4583);
+}
+
+.svg-container {
+  position: relative;
+  width: 100%;
 }
 </style>
