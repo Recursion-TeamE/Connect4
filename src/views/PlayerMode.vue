@@ -166,9 +166,7 @@ export default {
 
 <style scoped>
 h2 {
-  color: rgb(0, 72, 139);
-  stroke-linejoin: round;
-  filter: drop-shadow(2px 2px 2px #29a2ff);
+  color: #0056d8;
 }
 
 .btn {
