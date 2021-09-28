@@ -9,13 +9,14 @@ import { Player } from "../model/index"
 Vue.use(Vuex)
 
 
-const p1 = new Player("red")
-const p2 = new Player("yellow")
+const p1 = new Player("p1", "red")
+const p2 = new Player("p1", "yellow")
+const p3 = new Player("p1", "blue")
 
 export default new Vuex.Store({
   state: {
     // turn: 
-    players: [p1, p2],
+    players: [p1, p2, p3],
     board: []
   },
   mutations: mutations,

@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import Board from "./Board.vue";
-import BallSetters from "./BallSetters.vue"
+import Board from "@/components/Board.vue";
+import BallSetters from "@/components/BallSetters.vue"
 
 export default {
   components: {

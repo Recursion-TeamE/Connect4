@@ -7,7 +7,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faRobot, faUser } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import router from './router';
+import router  from './router.js';
 
 library.add(faRobot, faUser)
 
