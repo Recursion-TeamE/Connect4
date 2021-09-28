@@ -1,8 +1,8 @@
-html {
+/* html {
   background-color: rgb(245, 239, 222);
   text-align: center;
   color: #50462c;
-}
+} */
 
 .container{
   display: flex;
@@ -27,8 +27,19 @@ html {
 
 .ball{
   margin-top: 30px;
-  width: 100px;
+  width: 100px;   
   height: 100px;
   border: 2px rgb(161, 141, 96) solid;
   border-radius: 50%;
+}
+
+/* svg */
+.svg-text {
+  display: block;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  filter: drop-shadow(4px 4px 4px #1b4583);
 }
