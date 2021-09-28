@@ -1,25 +1,20 @@
 <template>
   <div id="app">
-    <Header />
-    <router-view :key="$route.path" />
+    <h1>Connect 4</h1>
+    <p>Click columns to play</p>
+    <Controller/>
   </div>
 </template>
 
-<script>
-import Header from "@/views/Header.vue";
+<script> 
+
+import Controller from './components/Controller.vue'
 
 export default {
-  name: "App",
+  name: 'app',
   components: {
-    Header,
+    Controller
   },
-};
+}
 </script>
 
-<style>
-/* Google fonts */
-@import url("https://fonts.googleapis.com/css2?family=Varela+Round&display=swap");
-#app {
-  font-family: "Varela Round", sans-serif;
-}
-</style>

@@ -1,26 +1,25 @@
 <template>
   <div>
-    <BallSetters />
-    <Board />
+    <p>--------- Controller Component ----------</p>
+    <Board/>
   </div>
 </template>
 
 <script>
-import Board from "./Board.vue";
-import BallSetters from "./BallSetters.vue"
 
-export default {
+import Board from './Board.vue'
+
+export default{
   components: {
     Board,
-    BallSetters,
   },
   data() {
-    return {};
+    return{
+    }
   },
-  computed: {},
-  methods: {},
-};
+  computed: {
+  },
+  methods: {
+  }
+}
 </script>
-
-
-
