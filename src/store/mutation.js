@@ -31,8 +31,10 @@ export default {
         const l = state.board.length
         const ball = state.board[rowIndex][colIndex]
 
-        if (ball.color !== null) return
-        if (rowIndex >= l) return
+        if (ball.color !== null || rowIndex >= l){
+            //turnを変える処理を実行
+            return;
+        }
 
         if (rowIndex !== 0) {
             const ballAbove = state.board[rowIndex - 1][colIndex]

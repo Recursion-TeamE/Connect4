@@ -8,7 +8,14 @@
         v-for="(col, colIndex) in row"
         v-bind:key="colIndex"
       >
-        <BallSVGVue v-if="col.color !== null" :color="col.color"></BallSVGVue>
+        <TemplateBallSVG v-if="col.color !== null" :color="col.color"
+            :circle1="ballColor.red.circle1"
+            :circle2="ballColor.red.circle2"
+            :circle3="ballColor.red.circle3"
+            :circle4="ballColor.red.circle4"
+            :circle5="ballColor.red.circle5"
+        ></TemplateBallSVG>
+        
       </div>
     </div>
   </div>
@@ -16,22 +23,23 @@
 
 <script>
 import { mapState } from "vuex";
-import BallSVGVue from "./BallSVG";
+import TemplateBallSVG from "./svg/TemplateBallSVG.vue";
+import { ballColor } from "@/config.js";
 
 export default {
   components: {
-    BallSVGVue,
+    TemplateBallSVG,
   },
   props: {},
   data() {
-    return {};
+    return {
+      ballColor: ballColor,
+    };
   },
   computed: {
     ...mapState(["board"]),
   },
-  methods: {
-    
-  },
+  methods: {},
 };
 </script>
 

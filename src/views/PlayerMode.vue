@@ -86,14 +86,13 @@
 
 <script>
 import { Player } from "@/model/index.js";
-import PlayerModeSVG from "@/components/PlayerModeSVG.vue";
+import PlayerModeSVG from "@/components/svg/PlayerModeSVG.vue";
 
 export default {
   data() {
     return {
       numberOfPlayers: 4,
       players: [new Player(), new Player()],
-      //   isSelected: false,
       selectedColors: ["", "", "", ""],
       isRedSelected: false,
       isBlueSelected: false,
@@ -118,9 +117,6 @@ export default {
     test() {
       console.log(this.players);
     },
-    // hideOption() {
-    //   this.isSelected = true;
-    // },
     initializeColors: function (index, color) {
       switch (this.selectedColors[index]) {
         case "Red":

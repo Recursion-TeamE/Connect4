@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import SettingSVG from "@/components/SettingSVG.vue";
+import SettingSVG from "@/components/svg/SettingSVG.vue";
 
 export default {
   components: {

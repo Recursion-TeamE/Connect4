@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import SettingPage from '../views/SettingPage.vue'
-import TopPage from '../views/TopPage.vue'
-import PlayerMode from "../views/PlayerMode.vue";
-import Board from "../components/Board.vue"
+import SettingPage from '@/views/SettingPage.vue'
+import TopPage from '@/views/TopPage.vue'
+import PlayerMode from "@/views/PlayerMode.vue"
+import GamePage from "@/views/GamePage.vue"
 
 Vue.use(VueRouter)
 
@@ -24,9 +24,9 @@ const routes = [
 		component: PlayerMode,
 	},
 	{
-		path: '/setting/playerMode/board',
-		name: 'board',
-		component: Board,
+		path: '/game',
+		name: 'gamePaage',
+		component: GamePage,
 	},
 ]
 
