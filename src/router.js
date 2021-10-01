@@ -24,8 +24,8 @@ const routes = [
 		component: PlayerMode,
 	},
 	{
-		path: '/game',
-		name: 'gamePaage',
+		path: '/setting/playerMode/game',
+		name: 'gamePage',
 		component: GamePage,
 	},
 ]

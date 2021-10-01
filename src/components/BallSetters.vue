@@ -1,13 +1,15 @@
 <template>
   <div>
     <div class="d-flex">
-      <div class="" v-for="(col, colIndex) in board" v-bind:key="colIndex">
+      <div v-for="(col, colIndex) in board" v-bind:key="colIndex">
         <button
-          class="btn btn-primary ball"
+          class="pt-3 d-flex btn-setters justify-content-center align-items-center btn btn-primary  "
           @click="setBall(colIndex, currentPlayer.color)"
         >
-          {{ colIndex }}
-        </button>
+          <font-awesome-layers class="fa-4x">
+            <font-awesome-icon icon="angle-down" />
+          </font-awesome-layers>
+        </button> 
       </div>
     </div>
   </div>

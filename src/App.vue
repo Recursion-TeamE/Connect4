@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="vh-100">
     <Header />
     <router-view :key="$route.path" />
   </div>

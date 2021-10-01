@@ -1,8 +1,8 @@
-/* html {
-  background-color: rgb(245, 239, 222);
+#app {
+  background-image: linear-gradient(to top, #93a5cf 0%, #e4efe9 100%);
   text-align: center;
-  color: #50462c;
-} */
+  overflow: hidden;
+}
 
 .container{
   display: flex;
@@ -18,20 +18,15 @@
   box-shadow: 5px 5px 10px rgba(197, 172, 115, 0.671);
 }
 
-.frame{
-  margin-top: 30px;
-  width: 150px;
-  height: 600px;
-  border: 2px rgb(161, 141, 96) solid;
+.ball{
+  margin: 10px;
+  background-color: white;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  box-shadow:5px 5px 8px 3px rgb(148, 148, 148) inset;
 }
 
-.ball{
-  margin-top: 30px;
-  width: 100px;   
-  height: 100px;
-  border: 2px rgb(161, 141, 96) solid;
-  border-radius: 50%;
-}
 
 /* svg */
 .svg-text {
@@ -43,3 +38,27 @@
   left: 0;
   filter: drop-shadow(4px 4px 4px #1b4583);
 }
+
+.bg-color{
+  background-color: rgb(43, 142, 255);
+}
+
+.btn-setters{
+  height: 50px;
+  margin: 10px;
+  background-color: white;
+  width: 100px;
+  border-radius: 50%;
+}
+
+.players-turn{ 
+  font-size: 2rem;
+  background-color: rgb(43, 142, 255);
+  padding: 8px;
+  border-radius: 20px;
+}
+
+.bg-header{
+  background-color: #eaf0ed;
+  border: 2px solid #eaf0ed83;
+} 

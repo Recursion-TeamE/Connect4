@@ -5,14 +5,14 @@ import "./assets/css/styles.css";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faRobot, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faRobot, faUser, faAngleDown, faHourglassHalf, faRedoAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import router from "./router.js";
 
 import { Player } from "@/model/index";
 import { ballColor } from "@/config";
 
-library.add(faRobot, faUser);
+library.add(faRobot, faUser, faAngleDown, faHourglassHalf, faRedoAlt);
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 

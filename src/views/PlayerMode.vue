@@ -79,7 +79,9 @@
       </form>
     </div>
     <div>
-      <button class="btn btn-primary mt-3" @click="test()">Game Start</button>
+      <router-link to="/setting/playerMode/game">
+        <button class="btn btn-primary mt-3" @click="test()">Game Start</button>
+      </router-link>
     </div>
   </div>
 </template>
