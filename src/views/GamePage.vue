@@ -5,7 +5,10 @@
         <h2 class="players-turn-font">{{ currentPlayer.name }}'s turn</h2>
       </div>
       <div v-for="(player, index) in players" :key="player.index">
-        Player {{ index + 1 }}: {{ player.name }}
+        <div class="row justify-content-center">
+          <p>Player {{ index + 1 }}: {{ player.name }}</p>
+          <TemplateBallSVG class="mini-ball mx-2" :color="player.color" />
+        </div>
       </div>
     </div>
     <div
@@ -36,7 +39,7 @@
           <font-awesome-icon icon="hourglass-half" />
           <p>{{ minutes }}:{{ seconds }}</p>
         </div>
-        <button @click="resetData()" class="btn btn-primary btn-reset">
+        <button @click="resetData()" class="btn btn-primary">
           <font-awesome-icon icon="redo-alt" />
         </button>
       </div>
@@ -47,12 +50,14 @@
 <script>
 import Board from "@/components/Board.vue";
 import BallSetters from "@/components/BallSetters.vue";
+import TemplateBallSVG from "@/components/svg/TemplateBallSVG.vue";
 import { mapState } from "vuex";
 
 export default {
   components: {
     Board,
     BallSetters,
+    TemplateBallSVG,
   },
   data() {
     return {

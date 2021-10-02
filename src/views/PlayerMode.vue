@@ -9,12 +9,12 @@
       align-items-center
     "
   >
-    <div class="svg-container mt-3">
-      <PlayerModeSVG class="svg-text" />
-    </div>
     <div>
+      <div class="svg-container mb-4">
+        <PlayerModeSVG class="svg-text" />
+      </div>
       <form class="d-flex flex-column align-items-center">
-        <div class="col-8 mt-5">
+        <div class="col-10 col-sm-8 mt-5">
           <label for="boardSize" class="form-label">Board Size</label>
           <input
             type="number"
@@ -23,7 +23,7 @@
             id="boardSize"
           />
         </div>
-        <div class="col-8 mt-3">
+        <div class="col-10 col-sm-8 mt-3">
           <label class="form-label">Number of Players</label>
           <input
             @change="changeNumberOfPlayers($event)"
@@ -39,7 +39,7 @@
         <div
           v-for="(player, index) in players"
           v-bind:key="player.index"
-          class="d-flex justify-content-around col-10 mb-3"
+          class="d-flex justify-content-around col-12 col-sm-8 mb-3"
         >
           <div class="col-6">
             <label class="form-check-label" for="playersName"
@@ -168,6 +168,7 @@ export default {
 <style scoped>
 h2 {
   color: #0056d8;
+  filter: drop-shadow(3px 3px 2px #ffffff);
 }
 
 .btn {
@@ -180,5 +181,15 @@ h2 {
 .svg-container {
   position: relative;
   width: 100%;
+}
+
+@media screen and (max-width: 320px) {
+  .svg-container {
+    top: 30px;
+  }
+
+  .form-check-label {
+    font-size: 0.8rem;
+  }
 }
 </style>

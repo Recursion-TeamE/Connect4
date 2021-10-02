@@ -1,8 +1,8 @@
 <template>
-  <div class="bg- color">
+  <div class="bg-color">
     <div class="d-flex" v-for="(row, rowIndex) in board" v-bind:key="rowIndex">
       <div
-        class="ball mx-3"
+        class="ball"
         v-for="(col, colIndex) in row"
         v-bind:key="colIndex"
       >
