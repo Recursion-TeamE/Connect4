@@ -76,16 +76,18 @@
             </select>
           </div>
         </div>
+        <div>
+          <router-link to="/setting/playerMode/game">
+            <button class="btn btn-primary mt-3" @click="setTimer()">
+              Game Start
+            </button>
+          </router-link>
+        </div>
       </form>
-    </div>
-    <div>
-      <router-link to="/setting/playerMode/game">
-        <button class="btn btn-primary mt-3" @click="test()">Game Start</button>
-      </router-link>
     </div>
   </div>
 </template>
-
+filter: drop-shadow(4px 4px 4px #ffffff);
 <script>
 import { Player } from "@/model/index.js";
 import PlayerModeSVG from "@/components/svg/PlayerModeSVG.vue";
@@ -119,6 +121,7 @@ export default {
     test() {
       console.log(this.players);
     },
+    setTimer() {},
     initializeColors: function (index, color) {
       switch (this.selectedColors[index]) {
         case "Red":

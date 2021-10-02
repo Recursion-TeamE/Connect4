@@ -3,13 +3,20 @@
     <div class="d-flex">
       <div v-for="(col, colIndex) in board" v-bind:key="colIndex">
         <button
-          class="pt-3 d-flex btn-setters justify-content-center align-items-center btn btn-primary  "
+          class="
+            pt-3
+            d-flex
+            btn-setters
+            justify-content-center
+            align-items-center
+            btn btn-primary
+          "
           @click="setBall(colIndex, currentPlayer.color)"
         >
-          <font-awesome-layers class="fa-4x">
+          <font-awesome-layers class="fa-2x pb-1">
             <font-awesome-icon icon="angle-down" />
           </font-awesome-layers>
-        </button> 
+        </button>
       </div>
     </div>
   </div>
@@ -26,7 +33,7 @@ export default {
     ...mapState(["board", "currentPlayer"]),
   },
   methods: {
-    setBall: function(colIndex, color) {
+    setBall: function (colIndex, color) {
       this.$store.dispatch("setBall", {
         colIndex: colIndex,
         rowIndex: 0,

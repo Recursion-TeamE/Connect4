@@ -1,7 +1,11 @@
 <template>
   <div class="bg- color">
     <div class="d-flex" v-for="(row, rowIndex) in board" v-bind:key="rowIndex">
-      <div class="ball" v-for="(col, colIndex) in row" v-bind:key="colIndex">
+      <div
+        class="ball mx-3"
+        v-for="(col, colIndex) in row"
+        v-bind:key="colIndex"
+      >
         <TemplateBallSVG
           v-if="col.color !== null"
           :color="col.color"
