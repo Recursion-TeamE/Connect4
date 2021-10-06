@@ -22,6 +22,9 @@
       "
     >
       <p>Click buttons to play</p>
+      <p>{{ lastBallPosition.rowIndex }}</p>
+      <p>{{ lastBallPosition.colIndex }}</p>
+      <p>{{ lastBallPosition.color }}</p>
       <BallSetters />
       <Board class="bg-color mb-sm-2" />
     </div>
@@ -44,6 +47,7 @@
         </button>
       </div>
     </div>
+    <button @click="verticalEvaluation">test</button>
   </div>
 </template>
 
@@ -66,10 +70,19 @@ export default {
       seconds: "00",
       isRunning: false,
       interval: null,
+      winnerExist: undefined,
     };
   },
   computed: {
-    ...mapState(["currentPlayer", "players"]),
+    ...mapState(["currentPlayer", "players", "lastBallPosition", "board"]),
+    // evaluationMessage(){
+    //   if(this.winnerExist){
+    //     console.log("Display Winner");
+    //   }
+    //   else {
+    //     console.log("It's a draw");
+    //   }
+    // },
   },
   mounted() {
     window.addEventListener("load", this.toggleTimer);
@@ -99,6 +112,35 @@ export default {
         return valString;
       }
     },
+    checkWinner() {
+      return (
+        this.verticalEvaluation ||
+        this.horizontalEvaluation ||
+        this.rightDiagonalEvaluation ||
+        this.leftDiagonalEvaluation
+      );
+    },
+    verticalEvaluation() {
+      let rowIndex = this.lastBallPosition.rowIndex;
+      let colIndex = this.lastBallPosition.colIndex;
+
+      // console.log(this.board[4][4].color.circle1.colorString == "red");
+
+      let currColor = this.board[rowIndex][colIndex].color.circle1.colorString;
+
+      for (let row = rowIndex; row <= row + 4; row++) {
+        if (this.board[row][colIndex].color.circle1.colorString != currColor) {
+          console.log("No match");
+          return false;
+        }
+      }
+
+      return true;
+    },
+    horizontalEvaluation() {},
+
+    rightDiagonalEvaluation() {},
+    leftDiagonalEvaluation() {},
   },
 };
 </script>

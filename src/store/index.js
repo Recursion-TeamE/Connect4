@@ -12,6 +12,7 @@ export default new Vuex.Store({
     currentPlayer: {},
     players: [],
     board: [],
+    lastBallPosition: {},
   },
   mutations: mutations,
   actions: actions,

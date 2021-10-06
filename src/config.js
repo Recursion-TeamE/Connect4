@@ -1,7 +1,8 @@
 export const ballColor = {
     blue:{
         circle1:{
-            color:"#000092"
+            color:"#000092",
+            colorString: "blue"
         },
         circle2:{
             id: "gradient13",
@@ -26,7 +27,8 @@ export const ballColor = {
     },
     red:{
         circle1:{
-            color:"#920000"
+            color:"#920000",
+            colorString: "red"
         },
         circle2:{
             id: "gradient04",
@@ -51,7 +53,8 @@ export const ballColor = {
     },
     yellow:{
         circle1:{
-            color:"#d8a200"
+            color:"#d8a200",
+            colorString: "yellow"
         },
         circle2:{
             id: "gradient07",
@@ -76,7 +79,8 @@ export const ballColor = {
     },
     green:{
         circle1:{
-            color:"#009200"
+            color:"#009200",
+            colorString: "green"
         },
         circle2:{
             id: "gradient10",
