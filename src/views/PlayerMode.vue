@@ -5,7 +5,7 @@
       text-center
       d-flex
       flex-column
-      justify-content-center
+      justify-content-start
       align-items-center
     "
   >
@@ -17,8 +17,10 @@
         <div class="col-10 col-sm-8 mt-5">
           <label for="boardSize" class="form-label">Board Size</label>
           <input
+            @change="changeBoardSize($event)"
             type="number"
             min="4"
+            value="4"
             class="form-control text-center"
             id="boardSize"
           />
@@ -28,8 +30,9 @@
           <input
             @change="changeNumberOfPlayers($event)"
             type="number"
-            min="1"
+            min="2"
             max="4"
+            value="2"
             class="form-control text-center"
           />
         </div>
@@ -52,33 +55,32 @@
               id="playersName"
             />
           </div>
-          <div class="col-6" @change="initializeColors(index, player.color)">
+          <div class="col-6" @change="changeColorItems(index, player.color)">
             <label class="form-check-label" for="playersColer"
               >Player's Color</label
             >
             <select
-              class="form-select"
+              class="form-select p-1"
               v-model="player.color"
               aria-label="Default select example"
               id="playersColer"
             >
               <option value="???" selected>Coose Color</option>
-              <option value="Red" v-bind:disabled="isRedSelected">Red</option>
-              <option value="Blue" v-bind:disabled="isBlueSelected">
-                Blue
-              </option>
-              <option value="Yellow" v-bind:disabled="isYellowSelected">
+              <option value="Red" :disabled="isRedSelected">Red</option>
+              <option value="Blue" :disabled="isBlueSelected">Blue</option>
+              <option value="Yellow" :disabled="isYellowSelected">
                 Yellow
               </option>
-              <option value="Green" v-bind:disabled="isGreenSelected">
-                Green
-              </option>
+              <option value="Green" :disabled="isGreenSelected">Green</option>
             </select>
           </div>
         </div>
         <div>
           <router-link to="/setting/playerMode/game">
-            <button class="btn btn-primary mt-3" @click="setTimer()">
+            <button
+              class="btn btn-primary mt-3"
+              @click="checkUnsubmittedItems(players)"
+            >
               Game Start
             </button>
           </router-link>
@@ -87,17 +89,19 @@
     </div>
   </div>
 </template>
-filter: drop-shadow(4px 4px 4px #ffffff);
+
 <script>
 import { Player } from "@/model/index.js";
 import PlayerModeSVG from "@/components/svg/PlayerModeSVG.vue";
+import { mapState } from "vuex";
 
 export default {
   data() {
     return {
+      boardSize: 5,
       numberOfPlayers: 4,
       players: [new Player(), new Player()],
-      selectedColors: ["", "", "", ""],
+      selectedColors: ["???", "???", "???", "???"],
       isRedSelected: false,
       isBlueSelected: false,
       isYellowSelected: false,
@@ -107,22 +111,31 @@ export default {
   components: {
     PlayerModeSVG,
   },
-  computed: {},
+  computed: mapState(["isFullyEnterd"]),
   methods: {
+    changeBoardSize: function (e) {
+      this.boardSize = e.target.value;
+
+      if (this.boardSize < 4) alert("Please enter a number greater than 3.");
+    },
     changeNumberOfPlayers: function (e) {
       this.numberOfPlayers = e.target.value;
 
-      if (this.numberOfPlayers >= this.players.length) {
-        this.players.push(new Player());
-      } else {
-        this.players.pop();
+      if (this.numberOfPlayers < 2 || this.numberOfPlayers > 4)
+        alert("Please enter a number from 2 to 4.");
+      else {
+        if (this.numberOfPlayers > this.players.length) {
+          this.players.push(new Player());
+        } else if (this.numberOfPlayers < this.players.length) {
+          this.players.pop();
+        }
       }
     },
     test() {
       console.log(this.players);
     },
     setTimer() {},
-    initializeColors: function (index, color) {
+    changeColorItems: function (index, color) {
       switch (this.selectedColors[index]) {
         case "Red":
           this.isRedSelected = false;
@@ -161,6 +174,9 @@ export default {
           break;
       }
     },
+    checkUnsubmittedItems: function (players) {
+      this.$store.dispatch("checkUnsubmittedItems", { players: players });
+    },
   },
 };
 </script>
@@ -179,13 +195,28 @@ h2 {
 }
 
 .svg-container {
+  margin-top: 6rem;
   position: relative;
   width: 100%;
 }
 
+.form-select {
+  font-size: 1.4rem;
+}
+
+@media screen and (max-width: 375px) {
+  .svg-container {
+    margin-top: 4rem;
+  }
+
+  .form-check-label {
+    font-size: 0.8rem;
+  }
+}
+
 @media screen and (max-width: 320px) {
   .svg-container {
-    top: 30px;
+    margin-top: 3rem;
   }
 
   .form-check-label {

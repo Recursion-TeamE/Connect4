@@ -96,4 +96,24 @@ export default {
 
 		state.currentPlayer = state.players[state.currentPlayerIndex];
 	},
+
+	checkUnsubmittedItems(state, { players }) {
+		for (let i = 0; i < players.length; i++) {
+			if (
+				players[i].name === "" &&
+				players[i].color === undefined
+			) {
+				alert("Please enter your name and color!");
+				return;
+			} else if (players[i].name === "") {
+				alert("Please enter your name!");
+				return;
+			} else if (players[i].color === undefined) {
+				alert("Please enter your color!");
+				return;
+			}
+		}
+		state.isFullyEnterd = true;
+		return;
+	},
 };

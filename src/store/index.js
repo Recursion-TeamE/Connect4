@@ -7,13 +7,14 @@ import mutations from "./mutation";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {
-    currentPlayerIndex: 0,
-    currentPlayer: {},
-    players: [],
-    board: [],
-    lastBallPosition: {},
-  },
-  mutations: mutations,
-  actions: actions,
+	state: {
+		currentPlayerIndex: 0,
+		currentPlayer: {},
+		players: [],
+		board: [],
+		lastBallPosition: {},
+		isFullyEnterd: false,
+	},
+	mutations: mutations,
+	actions: actions,
 });
