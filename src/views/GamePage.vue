@@ -47,7 +47,10 @@
         </button>
       </div>
     </div>
-    <button @click="verticalEvaluation">test</button>
+    <button @click="verticalEvaluation">vertical</button>
+    <button @click="horizontalEvaluation">horizontal</button>
+    <button @click="rightDiagonalEvaluation">rightD</button>
+    <button @click="leftDiagonalEvaluation">leftD</button>
   </div>
 </template>
 
@@ -112,6 +115,10 @@ export default {
         return valString;
       }
     },
+
+    /**
+     * 勝敗チェック
+     */
     checkWinner() {
       return (
         this.verticalEvaluation ||
@@ -120,27 +127,202 @@ export default {
         this.leftDiagonalEvaluation
       );
     },
+    check(n) {
+      console.log(n);
+      if (n >= 4) {
+        console.log("true");
+        return true;
+      } else {
+        console.log("false");
+        return false;
+      }
+    },
     verticalEvaluation() {
-      let rowIndex = this.lastBallPosition.rowIndex;
-      let colIndex = this.lastBallPosition.colIndex;
+      const rowIndex = this.lastBallPosition.rowIndex;
+      const colIndex = this.lastBallPosition.colIndex;
 
       // console.log(this.board[4][4].color.circle1.colorString == "red");
+      const currColor =
+        this.board[rowIndex][colIndex].color.circle1.colorString;
+      let stack = 1;
 
-      let currColor = this.board[rowIndex][colIndex].color.circle1.colorString;
+      //落ちた時点で上に積み上がっているものは存在しないはずなので、upperCheckしない
+      const lowerCheck = () => {
+        //縦の下限
+        const limit = this.board.length; // rowIndex+3
 
-      for (let row = rowIndex; row <= row + 4; row++) {
-        if (this.board[row][colIndex].color.circle1.colorString != currColor) {
-          console.log("No match");
-          return false;
+        for (let row = rowIndex + 1; row < limit; row++) {
+          const ball = this.board[row][colIndex];
+
+          if (ball.color.circle1.colorString != currColor) return;
+          else stack++;
         }
+      };
+
+      lowerCheck();
+
+      if (stack === 4) {
+        console.log("true");
+        return true;
+      } else {
+        console.log("false");
+        return false;
       }
-
-      return true;
     },
-    horizontalEvaluation() {},
+    horizontalEvaluation() {
+      const rowIndex = this.lastBallPosition.rowIndex;
+      const colIndex = this.lastBallPosition.colIndex;
 
-    rightDiagonalEvaluation() {},
-    leftDiagonalEvaluation() {},
+      // console.log(this.board[4][4].color.circle1.colorString == "red");
+      const currColor =
+        this.board[rowIndex][colIndex].color.circle1.colorString;
+      let stack = 1;
+
+      const leftCheck = () => {
+        const limit = 0; // rowIndex-3
+
+        for (let col = colIndex - 1; col >= limit; col--) {
+          const ball = this.board[rowIndex][col];
+
+          if (ball.color === null) return;
+          else if (ball.color.circle1.colorString != currColor) return;
+          else stack++;
+        }
+      };
+      const rightCheck = () => {
+        //縦の下限
+        const limit = this.board.length; // rowIndex+3
+
+        for (let col = colIndex + 1; col < limit; col++) {
+          const ball = this.board[rowIndex][col];
+
+          if (ball.color === null) return;
+          else if (ball.color.circle1.colorString != currColor) return;
+          else stack++;
+        }
+      };
+
+      leftCheck();
+      rightCheck();
+
+      this.check(stack);
+    },
+
+    /**
+     *  //右斜め上 (/)
+     *
+     * ________
+     *         |
+     *         |
+     *         |
+     *
+     * */
+    rightDiagonalEvaluation() {
+      
+      const rowIndex = this.lastBallPosition.rowIndex;
+      const colIndex = this.lastBallPosition.colIndex;
+
+      const currColor =
+        this.board[rowIndex][colIndex].color.circle1.colorString;
+      let stack = 1;
+
+      const upperCheck = () => {
+        const verticalLimit = 0; // rowIndex+3
+        const horizontalLimit = this.board.length; //colIndex+3
+
+        let row = rowIndex - 1;
+        let col = colIndex + 1;
+
+        while (col < horizontalLimit && row >= verticalLimit) {
+          const ball = this.board[row][col];
+
+          if (ball.color === null) return;
+          else if (ball.color.circle1.colorString != currColor) return;
+          else stack++;
+
+          row--;
+          col++;
+        }
+      };
+
+      const lowerCheck = () => {
+        const verticalLimit = this.board.length; // rowIndex+3
+        const horizontalLimit = 0; //colIndex+3
+
+        let row = rowIndex + 1;
+        let col = colIndex - 1;
+
+        while (col >= horizontalLimit && row < verticalLimit) {
+          const ball = this.board[row][col];
+
+          if (ball.color === null) return;
+          else if (ball.color.circle1.colorString != currColor) return;
+          else stack++;
+
+          row++;
+          col--;
+        }
+      };
+
+      upperCheck();
+      lowerCheck();
+      this.check(stack);
+    },
+    /**
+     *  //右ななめ下(\) 
+     */
+    leftDiagonalEvaluation() {
+      
+
+      const rowIndex = this.lastBallPosition.rowIndex;
+      const colIndex = this.lastBallPosition.colIndex;
+
+      const currColor =
+        this.board[rowIndex][colIndex].color.circle1.colorString;
+      let stack = 1;
+
+      const upperCheck = () => {
+        const verticalLimit = 0; // rowIndex+3
+        const horizontalLimit = 0; //colIndex+3
+
+        let row = rowIndex - 1;
+        let col = colIndex - 1;
+
+        while (col >= horizontalLimit && row >= verticalLimit) {
+          const ball = this.board[row][col];
+
+          if (ball.color === null) return;
+          else if (ball.color.circle1.colorString != currColor) return;
+          else stack++;
+
+          row--;
+          col--;
+        }
+      };
+
+      const lowerCheck = () => {
+        const verticalLimit = this.board.length; // rowIndex+3
+        const horizontalLimit = this.board.length; //colIndex+3
+
+        let row = rowIndex + 1;
+        let col = colIndex + 1;
+
+        while (col < horizontalLimit && row < verticalLimit) {
+          const ball = this.board[row][col];
+
+          if (ball.color === null) return;
+          else if (ball.color.circle1.colorString != currColor) return;
+          else stack++;
+
+          row++;
+          col++;
+        }
+      };
+
+      upperCheck();
+      lowerCheck();
+      this.check(stack);
+    },
   },
 };
 </script>
