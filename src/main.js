@@ -1,9 +1,11 @@
 import Vue from "vue";
 import App from "./App.vue";
 import store from "./store";
+
 import "./assets/css/styles.css";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
+import BootstrapVue from 'bootstrap-vue'
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faRobot, faUser, faAngleDown, faHourglassHalf, faRedoAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
@@ -13,10 +15,10 @@ import { Player } from "@/model/index";
 import { ballColor } from "@/config";
 
 library.add(faRobot, faUser, faAngleDown, faHourglassHalf, faRedoAlt);
-
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 
 Vue.config.productionTip = false;
+Vue.use(BootstrapVue)
 
 const app = new Vue({
   store,
