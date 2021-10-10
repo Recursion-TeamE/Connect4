@@ -9,7 +9,7 @@ export default {
 	 */
 	setBoard(state, payload) {
 		const array = [];
-		const l = payload.boardLength;
+		const l = payload;
 
 		for (let i = 0; i < l; i++) {
 			const row = [];
@@ -19,7 +19,7 @@ export default {
 			array.push(row);
 		}
 
-		state.board = array;
+		state.board = array;	
 	},
 	/**
 	 * @payload {
@@ -28,6 +28,7 @@ export default {
 	 */
 	setBall(state, { rowIndex, colIndex, color }) {
 		const l = state.board.length;
+		state.isDropping = true;
 
 		if (rowIndex >= l) {
 			this.commit("turnChange",
@@ -36,6 +37,7 @@ export default {
 					colIndex: colIndex,
 					colorString: color.circle1.colorString
 				});
+			state.isDropping = false;
 			return;
 		}
 
@@ -48,6 +50,7 @@ export default {
 				colIndex: colIndex,
 				colorString: color.circle1.colorString
 			});
+			state.isDropping = false;
 			return;
 		}
 
@@ -69,7 +72,7 @@ export default {
 				colIndex: colIndex,
 				color: color,
 			});
-		}, 500);
+		}, 300);
 	},
 	/**
 	 * @payload {

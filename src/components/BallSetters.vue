@@ -12,6 +12,7 @@
             btn btn-primary
           "
           @click="setBall(colIndex, currentPlayer.color)"
+          :disabled="isDropping"
         >
           <font-awesome-layers class="fa-2x pb-1">
             <font-awesome-icon icon="angle-down" />
@@ -30,7 +31,7 @@ export default {
     return {};
   },
   computed: {
-    ...mapState(["board", "currentPlayer"]),
+    ...mapState(["board", "currentPlayer", "isDropping"]),
   },
   methods: {
     setBall: function (colIndex, color) {

@@ -19,17 +19,14 @@ Vue.component("font-awesome-icon", FontAwesomeIcon);
 Vue.config.productionTip = false;
 
 const app = new Vue({
-  store,
-  router,
-  methods: {
-    setBoard: function(boardLength) {
-      this.$store.dispatch("setBoard", { boardLength: boardLength });
-    },
-    setPlayers: function(players) {
-      this.$store.dispatch("setPlayers", { players: players });
-    },
-  },
-  render: (h) => h(App),
+	store,
+	router,
+	methods: {
+		setPlayers: function (players) {
+			this.$store.dispatch("setPlayers", { players: players });
+		},
+	},
+	render: (h) => h(App),
 }).$mount("#app");
 
 ///設定
@@ -40,4 +37,4 @@ const p3 = new Player("p3", ballColor.blue);
 const players = [p1, p2, p3];
 
 app.setPlayers(players);
-app.setBoard(5);
+// app.setBoard(5);

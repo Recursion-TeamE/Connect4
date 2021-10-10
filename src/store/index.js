@@ -14,6 +14,7 @@ export default new Vuex.Store({
 		board: [],
 		lastBallPosition: {},
 		isFullyEnterd: false,
+		isDropping: false,
 	},
 	mutations: mutations,
 	actions: actions,
