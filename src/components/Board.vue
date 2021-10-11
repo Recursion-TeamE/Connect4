@@ -8,7 +8,7 @@
       >
         <TemplateBallSVG
           v-if="col.color !== null"
-          :color="Config.ballColor[col.color]"
+          :color="col.color"
         ></TemplateBallSVG>
       </div>
     </div>

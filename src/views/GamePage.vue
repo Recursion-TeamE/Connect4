@@ -25,8 +25,10 @@
       <p>{{ lastBallPosition.rowIndex }}</p>
       <p>{{ lastBallPosition.colIndex }}</p>
       <p>{{ lastBallPosition.color }}</p>
+
       <BallSetters />
       <Board class="bg-color mb-sm-2" />
+
     </div>
     <div
       class="
@@ -47,10 +49,12 @@
         </button>
       </div>
     </div>
+
     <button @click="verticalEvaluation">vertical</button>
     <button @click="horizontalEvaluation">horizontal</button>
     <button @click="rightDiagonalEvaluation">rightD</button>
     <button @click="leftDiagonalEvaluation">leftD</button>
+
   </div>
 </template>
 
@@ -58,6 +62,7 @@
 import Board from "@/components/Board.vue";
 import BallSetters from "@/components/BallSetters.vue";
 import TemplateBallSVG from "@/components/svg/TemplateBallSVG.vue";
+import { Config } from "@/config"
 import { mapState } from "vuex";
 
 export default {
@@ -68,6 +73,7 @@ export default {
   },
   data() {
     return {
+      Config: Config,
       totalSeconds: 0,
       minutes: "00",
       seconds: "00",
