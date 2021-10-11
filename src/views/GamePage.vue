@@ -146,9 +146,8 @@ export default {
       const rowIndex = this.lastBallPosition.rowIndex;
       const colIndex = this.lastBallPosition.colIndex;
 
-      // console.log(this.board[4][4].color.circle1.colorString == "red");
       const currColor =
-        this.board[rowIndex][colIndex].color.circle1.colorString;
+        this.board[rowIndex][colIndex].color;
       let stack = 1;
 
       //落ちた時点で上に積み上がっているものは存在しないはずなので、upperCheckしない
@@ -159,7 +158,7 @@ export default {
         for (let row = rowIndex + 1; row < limit; row++) {
           const ball = this.board[row][colIndex];
 
-          if (ball.color.circle1.colorString != currColor) return;
+          if (ball.color != currColor) return;
           else stack++;
         }
       };
@@ -178,9 +177,7 @@ export default {
       const rowIndex = this.lastBallPosition.rowIndex;
       const colIndex = this.lastBallPosition.colIndex;
 
-      // console.log(this.board[4][4].color.circle1.colorString == "red");
-      const currColor =
-        this.board[rowIndex][colIndex].color.circle1.colorString;
+      const currColor =this.board[rowIndex][colIndex].color
       let stack = 1;
 
       const leftCheck = () => {
@@ -190,7 +187,7 @@ export default {
           const ball = this.board[rowIndex][col];
 
           if (ball.color === null) return;
-          else if (ball.color.circle1.colorString != currColor) return;
+          else if (ball.color != currColor) return;
           else stack++;
         }
       };
@@ -202,7 +199,7 @@ export default {
           const ball = this.board[rowIndex][col];
 
           if (ball.color === null) return;
-          else if (ball.color.circle1.colorString != currColor) return;
+          else if (ball.color != currColor) return;
           else stack++;
         }
       };
@@ -228,7 +225,7 @@ export default {
       const colIndex = this.lastBallPosition.colIndex;
 
       const currColor =
-        this.board[rowIndex][colIndex].color.circle1.colorString;
+        this.board[rowIndex][colIndex].color;
       let stack = 1;
 
       const upperCheck = () => {
@@ -242,7 +239,7 @@ export default {
           const ball = this.board[row][col];
 
           if (ball.color === null) return;
-          else if (ball.color.circle1.colorString != currColor) return;
+          else if (ball.color != currColor) return;
           else stack++;
 
           row--;
@@ -261,7 +258,7 @@ export default {
           const ball = this.board[row][col];
 
           if (ball.color === null) return;
-          else if (ball.color.circle1.colorString != currColor) return;
+          else if (ball.color != currColor) return;
           else stack++;
 
           row++;
@@ -283,7 +280,7 @@ export default {
       const colIndex = this.lastBallPosition.colIndex;
 
       const currColor =
-        this.board[rowIndex][colIndex].color.circle1.colorString;
+        this.board[rowIndex][colIndex].color;
       let stack = 1;
 
       const upperCheck = () => {
@@ -297,7 +294,7 @@ export default {
           const ball = this.board[row][col];
 
           if (ball.color === null) return;
-          else if (ball.color.circle1.colorString != currColor) return;
+          else if (ball.color != currColor) return;
           else stack++;
 
           row--;
@@ -316,7 +313,7 @@ export default {
           const ball = this.board[row][col];
 
           if (ball.color === null) return;
-          else if (ball.color.circle1.colorString != currColor) return;
+          else if (ball.color != currColor) return;
           else stack++;
 
           row++;
