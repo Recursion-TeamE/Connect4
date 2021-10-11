@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import router from "./router.js";
 
 import { Player } from "@/model/index";
-import { ballColor } from "@/config";
+import { Config } from "@/config";
 
 library.add(faRobot, faUser, faAngleDown, faHourglassHalf, faRedoAlt);
 
@@ -30,9 +30,9 @@ const app = new Vue({
 }).$mount("#app");
 
 ///設定
-const p1 = new Player("p1", ballColor.red);
-const p2 = new Player("p2", ballColor.yellow);
-const p3 = new Player("p3", ballColor.blue);
+const p1 = new Player("p1", Config.ballColor.red);
+const p2 = new Player("p2", Config.ballColor.yellow);
+const p3 = new Player("p3", Config.ballColor.blue);
 
 const players = [p1, p2, p3];
 

@@ -42,7 +42,7 @@
           <font-awesome-icon icon="hourglass-half" />
           <p>{{ minutes }}:{{ seconds }}</p>
         </div>
-        <button @click="resetData()" class="btn btn-primary">
+        <button @click="resetBoard()" class="btn btn-primary">
           <font-awesome-icon icon="redo-alt" />
         </button>
       </div>
@@ -91,9 +91,10 @@ export default {
     window.addEventListener("load", this.toggleTimer);
   },
   methods: {
-    resetData: function () {
-      window.location.reload();
-    },
+    resetBoard: function () {
+      this.$store.dispatch("setBoard");
+      this.toggleTimer; // gameStartボタンから発火するようにしたい
+    },  
     toggleTimer: function () {
       if (this.isRunning) {
         clearInterval(this.interval);

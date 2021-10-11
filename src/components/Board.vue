@@ -18,7 +18,7 @@
 <script>
 import { mapState } from "vuex";
 import TemplateBallSVG from "./svg/TemplateBallSVG.vue";
-import { ballColor } from "@/config.js";
+import { Config } from "@/config.js";
 
 export default {
   components: {
@@ -27,7 +27,7 @@ export default {
   props: {},
   data() {
     return {
-      ballColor: ballColor,
+      ballColor: Config.ballColor,
     };
   },
   computed: {

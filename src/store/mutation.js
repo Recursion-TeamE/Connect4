@@ -2,14 +2,19 @@ import { Ball } from "../model/index";
 import { lastBallPosition } from "../model/index";
 
 export default {
+
+	setBoardSize(state, {boardSize}){
+		state.boardSize = boardSize;
+	},
 	/**
 	 * @payload {
-	 *    boardLength: Integer
+	 *    boardSize: Integer
 	 * }
 	 */
-	setBoard(state, payload) {
+	setBoard(state) {
+
 		const array = [];
-		const l = payload;
+		const l = state.boardSize;
 
 		for (let i = 0; i < l; i++) {
 			const row = [];
@@ -19,7 +24,7 @@ export default {
 			array.push(row);
 		}
 
-		state.board = array;	
+		state.board = array;
 	},
 	/**
 	 * @payload {
@@ -119,4 +124,13 @@ export default {
 		state.isFullyEnterd = true;
 		return;
 	},
+
+	/**
+	 * @payload {
+	 *     boardSize: Integer
+	 * }
+	 */
+	getBoardSize(state, payload){
+		state.boardSize = payload;
+	}
 };
