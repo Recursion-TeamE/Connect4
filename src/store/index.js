@@ -13,7 +13,7 @@ export default new Vuex.Store({
 		currentPlayer: {},
 		players: [],
 		board: [],
-		boardSize: 5,
+		boardSize: 0,
 		lastBallPosition: {},
 		isFullyEnterd: false,
 		isDropping: false,

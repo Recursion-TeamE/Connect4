@@ -62,7 +62,6 @@
 import Board from "@/components/Board.vue";
 import BallSetters from "@/components/BallSetters.vue";
 import TemplateBallSVG from "@/components/svg/TemplateBallSVG.vue";
-import { Config } from "@/config"
 import { mapState } from "vuex";
 
 export default {
@@ -73,7 +72,6 @@ export default {
   },
   data() {
     return {
-      Config: Config,
       totalSeconds: 0,
       minutes: "00",
       seconds: "00",

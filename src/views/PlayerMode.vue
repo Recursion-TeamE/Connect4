@@ -134,8 +134,6 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
-      // Config: Config,
-
       boardSize: Config.board.size.min,
       boardSizeOptions: getArrayOfNumber(Config.board.size.min, Config.board.size.max),
 
@@ -158,7 +156,6 @@ export default {
     ...mapState(["isFullyEnterd", ""]),
   },
   methods: {
-
     gameStart: function () {
       this.$store.dispatch("setBoardSize", { boardSize: this.boardSize });
       this.$store.dispatch("setBoard");
@@ -168,16 +165,13 @@ export default {
       this.numberOfPlayers = e.target.value;
 
       while(this.numberOfPlayers > this.players.length || this.numberOfPlayers < this.players.length){
-
         if(this.numberOfPlayers > this.players.length){
           this.players.push(new Player())
         }
         else if(this.numberOfPlayers < this.players.length){
           this.players.pop()
         }
-
       }
-
     },
   },
 };
