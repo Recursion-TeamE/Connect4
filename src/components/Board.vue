@@ -8,7 +8,7 @@
       >
         <TemplateBallSVG
           v-if="col.color !== null"
-          :color="col.color"
+          :color="Config.ballColor[col.color]"
         ></TemplateBallSVG>
       </div>
     </div>
@@ -27,7 +27,7 @@ export default {
   props: {},
   data() {
     return {
-      ballColor: Config.ballColor,
+      Config: Config,
     };
   },
   computed: {

@@ -40,7 +40,7 @@ export default {
 				{
 					rowIndex: rowIndex - 1,
 					colIndex: colIndex,
-					colorString: color.circle1.colorString
+					colorString: color
 				});
 			state.isDropping = false;
 			return;
@@ -53,7 +53,7 @@ export default {
 			this.commit("turnChange", {
 				rowIndex: rowIndex - 1,
 				colIndex: colIndex,
-				colorString: color.circle1.colorString
+				colorString: color
 			});
 			state.isDropping = false;
 			return;
