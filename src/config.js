@@ -1,4 +1,4 @@
-import ballColors from "@colors"
+import ballColors from "@/colors"
 export const Config = {
 
 	ballColor: ballColors,
@@ -10,7 +10,7 @@ export const Config = {
 		}
 	},
 
-	player: {
+	players: {
 		number: {
 			min: 2,
 			max: 4,

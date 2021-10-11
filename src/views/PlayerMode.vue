@@ -125,24 +125,25 @@
 </template>
 
 <script>
-import { Player } from "@/model/index.js";
 import PlayerModeSVG from "@/components/svg/PlayerModeSVG.vue";
+import { getArrayOfNumber, getArrayOfPlayers} from "@/utils"
+import { Player } from "@/model/index.js";
 import { Config } from "@/config.js";
 import { mapState } from "vuex";
 
 export default {
   data() {
     return {
-      Config: Config,
-      boardSize: 5,
-      boardSizeOptions: [5,6,7,8],
-      numberOfPlayers: 2,
-      numberOfPlayersOptions: [2,3,4],
-      players: [
-        new Player(), 
-        new Player(), 
-      ],
-      colorOptions: Object.keys(Config.ballColor).map((color) => {
+      // Config: Config,
+
+      boardSize: Config.board.size.min,
+      boardSizeOptions: getArrayOfNumber(Config.board.size.min, Config.board.size.max),
+
+      numberOfPlayers: Config.players.number.min,
+      numberOfPlayersOptions: getArrayOfNumber(Config.players.number.min, Config.players.number.max),
+
+      players: getArrayOfPlayers(Config.players.number.min),
+      colorOptions: Object.keys(Config.ballColor).map(color => {
         return {
           color: color,
           disabled: false,
@@ -157,6 +158,7 @@ export default {
     ...mapState(["isFullyEnterd", ""]),
   },
   methods: {
+
     gameStart: function () {
       this.$store.dispatch("setBoardSize", { boardSize: this.boardSize });
       this.$store.dispatch("setBoard");
