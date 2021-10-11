@@ -152,7 +152,7 @@ export default {
       isGreenSelected: false,
       isPinkSelected: false,
       isCyanSelected: false,
-      errors: [],
+      errors: [], //テスト
     };
   },
   components: {
