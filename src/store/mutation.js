@@ -3,7 +3,7 @@ import { lastBallPosition } from "../model/index";
 
 export default {
 
-	setBoardSize(state, {boardSize}){
+	setBoardSize(state, { boardSize }) {
 		state.boardSize = boardSize;
 	},
 	/**
@@ -124,13 +124,32 @@ export default {
 		state.isFullyEnterd = true;
 		return;
 	},
+	toggleTimer(state) {
 
-	/**
-	 * @payload {
-	 *     boardSize: Integer
-	 * }
-	 */
-	getBoardSize(state, payload){
-		state.boardSize = payload;
-	}
+		state.totalSeconds = 0;
+		state.minutes = "00"
+		state.seconds = "00"
+
+		const pad = (val) => {
+			let valString = val + "";
+			if (valString.length < 2) return "0" + valString;
+			else return valString;
+		}
+
+		const incrementTime = () => {
+			++state.totalSeconds;
+			state.minutes = pad(parseInt(state.totalSeconds / 60)).toString();
+			state.seconds = pad(state.totalSeconds % 60).toString();
+		}
+
+		clearInterval(state.interval);
+		state.interval = setInterval(incrementTime, 1000);
+		
+
+		// if (state.isRunning) clearInterval(state.interval);
+		// else state.interval = setInterval(incrementTime, 1000);
+		
+		// state.isRunning = !state.isRunning;
+	},
+
 };

@@ -160,6 +160,7 @@ export default {
       this.$store.dispatch("setBoardSize", { boardSize: this.boardSize });
       this.$store.dispatch("setBoard");
       this.$store.dispatch("setPlayers", { players: this.players });
+      this.$store.dispatch("toggleTimer");
     },
     initializeUser: function (e) {
       this.numberOfPlayers = e.target.value;

@@ -9,14 +9,22 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
 	state: {
-		currentPlayerIndex: 0,
-		currentPlayer: {},
 		players: [],
 		board: [],
 		boardSize: 0,
+
+		currentPlayerIndex: 0,
+		currentPlayer: {},
 		lastBallPosition: {},
+		
 		isFullyEnterd: false,
 		isDropping: false,
+
+		totalSeconds: 0,
+		minutes: "00",
+		seconds: "00",
+		isRunning: false,
+		interval: null,
 	},
 	mutations: mutations,
 	actions: actions,

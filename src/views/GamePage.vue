@@ -72,16 +72,18 @@ export default {
   },
   data() {
     return {
-      totalSeconds: 0,
-      minutes: "00",
-      seconds: "00",
-      isRunning: false,
-      interval: null,
       winnerExist: undefined,
     };
   },
   computed: {
-    ...mapState(["currentPlayer", "players", "lastBallPosition", "board"]),
+    ...mapState([
+      "currentPlayer", 
+      "players", 
+      "lastBallPosition", 
+      "board",
+      "minutes",
+      "seconds",
+    ]),
     // evaluationMessage(){
     //   if(this.winnerExist){
     //     console.log("Display Winner");
@@ -97,30 +99,8 @@ export default {
   methods: {
     resetBoard: function () {
       this.$store.dispatch("setBoard");
-      this.toggleTimer; // gameStartボタンから発火するようにしたい
+      this.$store.dispatch("toggleTimer");
     },  
-    toggleTimer: function () {
-      if (this.isRunning) {
-        clearInterval(this.interval);
-      } else {
-        this.interval = setInterval(this.incrementTime, 1000);
-      }
-      this.isRunning = !this.isRunning;
-    },
-    incrementTime() {
-      ++this.totalSeconds;
-      this.minutes = this.pad(parseInt(this.totalSeconds / 60)).toString();
-      this.seconds = this.pad(this.totalSeconds % 60).toString();
-    },
-    pad(val) {
-      let valString = val + "";
-      if (valString.length < 2) {
-        return "0" + valString;
-      } else {
-        return valString;
-      }
-    },
-
     /**
      * 勝敗チェック
      */
