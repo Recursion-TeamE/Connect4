@@ -1,7 +1,10 @@
 <template>
-  <div v-if="isPlayable()" class="row align-items-center justify-content-around h-100">
+  <div
+    v-if="isPlayable()"
+    class="row align-items-center justify-content-around h-100"
+  >
     <div class="col-md-4 col-sm-3 display-players pb-5">
-      <div class="players-turn">
+      <div class="players-turn my-4">
         <h2 class="players-turn-font">{{ currentPlayer.name }}'s turn</h2>
       </div>
       <div v-for="(player, index) in players" :key="player.index">
@@ -28,7 +31,6 @@
 
       <BallSetters />
       <Board class="bg-color mb-sm-2" />
-
     </div>
     <div
       class="
@@ -54,51 +56,62 @@
     <button @click="horizontalEvaluation">horizontal</button>
     <button @click="rightDiagonalEvaluation">rightD</button>
     <button @click="leftDiagonalEvaluation">leftD</button>
-
+    <button @click="openWinnerWindow">Winner</button>
+    <button @click="openDrawWindow">Draw</button>
+    <WinnerWindow
+      v-if="winnerExist"
+      @from-display-winner="closeWinnerWindow"
+    />
+    <DrawWindow v-if="isDraw" @from-draw-window="closeDrawWindow" />
   </div>
 
-  <div v-else class="vh-100 d-flex flex-column justify-content-center align-items-center">
+  <div
+    v-else
+    class="vh-100 d-flex flex-column justify-content-center align-items-center"
+  >
     <div class="">
       <h2>Sorry, but you have to go to setting page</h2>
     </div>
     <div class="d-flex justify-content-center align-items-center h-50">
       <div class="btn-container">
         <router-link to="/setting">
-          <button class="btn btn-primary">
-            Setting Page
-          </button>
+          <button class="btn btn-primary">Setting Page</button>
         </router-link>
       </div>
     </div>
   </div>
-
-
 </template>
 
 <script>
 import Board from "@/components/Board.vue";
 import BallSetters from "@/components/BallSetters.vue";
 import TemplateBallSVG from "@/components/svg/TemplateBallSVG.vue";
+
 import { mapState } from "vuex";
 
-import { Config } from "@/config"
+import { Config } from "@/config";
+import WinnerWindow from "../components/WinnerWindow.vue";
+import DrawWindow from "../components/DrawWindow.vue";
 
 export default {
   components: {
     Board,
     BallSetters,
     TemplateBallSVG,
+    WinnerWindow,
+    DrawWindow,
   },
   data() {
     return {
       winnerExist: undefined,
+      isDraw: undefined, // 引き分けかどうか
     };
   },
   computed: {
     ...mapState([
-      "currentPlayer", 
-      "players", 
-      "lastBallPosition", 
+      "currentPlayer",
+      "players",
+      "lastBallPosition",
       "board",
       "minutes",
       "seconds",
@@ -116,11 +129,25 @@ export default {
     window.addEventListener("load", this.toggleTimer);
   },
   methods: {
-    isPlayable: function(){
-      return(
+    openWinnerWindow: function () {
+      this.winnerExist = true;
+    },
+    closeWinnerWindow: function () {
+      this.winnerExist = false;
+      this.resetBoard();
+    },
+    openDrawWindow: function () {
+      this.isDraw = true;
+    },
+    closeDrawWindow: function () {
+      this.isDraw = false;
+      this.resetBoard();
+    },
+    isPlayable: function () {
+      return (
         this.$store.state.boardSize >= Config.board.size.min &&
         this.$store.state.players.length >= Config.players.number.min
-      )
+      );
     },
     resetBoard: function () {
       this.$store.dispatch("setBoard");
@@ -151,8 +178,7 @@ export default {
       const rowIndex = this.lastBallPosition.rowIndex;
       const colIndex = this.lastBallPosition.colIndex;
 
-      const currColor =
-        this.board[rowIndex][colIndex].color;
+      const currColor = this.board[rowIndex][colIndex].color;
       let stack = 1;
 
       //落ちた時点で上に積み上がっているものは存在しないはずなので、upperCheckしない
@@ -182,7 +208,7 @@ export default {
       const rowIndex = this.lastBallPosition.rowIndex;
       const colIndex = this.lastBallPosition.colIndex;
 
-      const currColor =this.board[rowIndex][colIndex].color
+      const currColor = this.board[rowIndex][colIndex].color;
       let stack = 1;
 
       const leftCheck = () => {
@@ -225,12 +251,10 @@ export default {
      *
      * */
     rightDiagonalEvaluation() {
-      
       const rowIndex = this.lastBallPosition.rowIndex;
       const colIndex = this.lastBallPosition.colIndex;
 
-      const currColor =
-        this.board[rowIndex][colIndex].color;
+      const currColor = this.board[rowIndex][colIndex].color;
       let stack = 1;
 
       const upperCheck = () => {
@@ -276,16 +300,13 @@ export default {
       this.check(stack);
     },
     /**
-     *  //右ななめ下(\) 
+     *  //右ななめ下(\)
      */
     leftDiagonalEvaluation() {
-      
-
       const rowIndex = this.lastBallPosition.rowIndex;
       const colIndex = this.lastBallPosition.colIndex;
 
-      const currColor =
-        this.board[rowIndex][colIndex].color;
+      const currColor = this.board[rowIndex][colIndex].color;
       let stack = 1;
 
       const upperCheck = () => {
