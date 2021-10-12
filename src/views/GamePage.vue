@@ -1,5 +1,5 @@
 <template>
-  <div class="row align-items-center justify-content-around h-100">
+  <div v-if="isPlayable()" class="row align-items-center justify-content-around h-100">
     <div class="col-md-4 col-sm-3 display-players pb-5">
       <div class="players-turn">
         <h2 class="players-turn-font">{{ currentPlayer.name }}'s turn</h2>
@@ -56,6 +56,23 @@
     <button @click="leftDiagonalEvaluation">leftD</button>
 
   </div>
+
+  <div v-else class="vh-100 d-flex flex-column justify-content-center align-items-center">
+    <div class="">
+      <h2>Sorry, but you have to go to setting page</h2>
+    </div>
+    <div class="d-flex justify-content-center align-items-center h-50">
+      <div class="btn-container">
+        <router-link to="/setting">
+          <button class="btn btn-primary">
+            Setting Page
+          </button>
+        </router-link>
+      </div>
+    </div>
+  </div>
+
+
 </template>
 
 <script>
@@ -63,6 +80,8 @@ import Board from "@/components/Board.vue";
 import BallSetters from "@/components/BallSetters.vue";
 import TemplateBallSVG from "@/components/svg/TemplateBallSVG.vue";
 import { mapState } from "vuex";
+
+import { Config } from "@/config"
 
 export default {
   components: {
@@ -97,10 +116,16 @@ export default {
     window.addEventListener("load", this.toggleTimer);
   },
   methods: {
+    isPlayable: function(){
+      return(
+        this.$store.state.boardSize >= Config.board.size.min &&
+        this.$store.state.players.length >= Config.players.number.min
+      )
+    },
     resetBoard: function () {
       this.$store.dispatch("setBoard");
       this.$store.dispatch("toggleTimer");
-    },  
+    },
     /**
      * 勝敗チェック
      */
