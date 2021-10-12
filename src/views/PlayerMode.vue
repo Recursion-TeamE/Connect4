@@ -5,46 +5,70 @@
       text-center
       d-flex
       flex-column
-      justify-content-center
+      justify-content-start
       align-items-center
     "
   >
     <div>
+
+
+
       <div class="svg-container mb-4">
         <PlayerModeSVG class="svg-text" />
       </div>
+
+
       <form class="d-flex flex-column align-items-center">
+
+        <!-- 
+        Board Size
+         -->
         <div class="col-10 col-sm-8 mt-5">
           <label for="boardSize" class="form-label">Board Size</label>
-          <input
-            type="number"
-            min="4"
-            class="form-control text-center"
+          <select
+            class="form-select p-1 col-12 text-center"
             id="boardSize"
-          />
+            v-model="boardSize"
+          >
+            <option v-for="(option, index) in boardSizeOptions" :key="index">
+              {{ option }}
+            </option>
+          </select>
         </div>
+
+
+        <!-- 
+        Number of Player
+         -->
         <div class="col-10 col-sm-8 mt-3">
-          <label class="form-label">Number of Players</label>
-          <input
-            @change="changeNumberOfPlayers($event)"
-            type="number"
-            min="1"
-            max="4"
-            class="form-control text-center"
-          />
+          <label for="numberOfPlayers" class="form-check-label p-1">Number of Players</label>
+          <select
+            class="form-select p-1 col-12 text-center"
+            id="numberOfPlayers"
+            @change="initializeUser($event)"
+            v-model="numberOfPlayers"
+          >
+            <option v-for="(option, index) in numberOfPlayersOptions" :key="index">
+              {{ option }}
+            </option>
+          </select>
         </div>
+
+        <!-- 
+        Player Setting
+         -->
         <div class="my-3">
           <h2>Player Setting</h2>
         </div>
+
+
         <div
           v-for="(player, index) in players"
-          v-bind:key="player.index"
+          :key="index"
           class="d-flex justify-content-around col-12 col-sm-8 mb-3"
         >
           <div class="col-6">
-            <label class="form-check-label" for="playersName"
-              >Player's Name</label
-            >
+            <label class="form-check-label" for="playersName">Player's Name</label>
             <input
               v-model="player.name"
               type="text"
@@ -52,113 +76,102 @@
               id="playersName"
             />
           </div>
-          <div class="col-6" @change="initializeColors(index, player.color)">
-            <label class="form-check-label" for="playersColer"
-              >Player's Color</label
-            >
+
+          <div class="col-6">
+            <label class="form-check-label" for="playersColer">Player's Color</label>
             <select
-              class="form-select"
+              class="form-select p-1"
               v-model="player.color"
               aria-label="Default select example"
               id="playersColer"
             >
-              <option value="???" selected>Coose Color</option>
-              <option value="Red" v-bind:disabled="isRedSelected">Red</option>
-              <option value="Blue" v-bind:disabled="isBlueSelected">
-                Blue
-              </option>
-              <option value="Yellow" v-bind:disabled="isYellowSelected">
-                Yellow
-              </option>
-              <option value="Green" v-bind:disabled="isGreenSelected">
-                Green
+              <option
+                v-for="(colorOption, index) in colorOptions"
+                :key="index"
+                :value="colorOption.color"
+                :disabled="colorOption.disabled"
+                @change="selectColor($event)"
+              >
+                {{ colorOption.color }}
               </option>
             </select>
           </div>
         </div>
+
+
+        <!-- 
+          Game start
+        -->
         <div>
           <router-link to="/setting/playerMode/game">
-            <button class="btn btn-primary mt-3" @click="setTimer()">
+            <button
+              type="submit"
+              class="btn btn-primary mt-3"
+              @click="gameStart"
+            >
               Game Start
             </button>
           </router-link>
         </div>
+
+
+
+
       </form>
+
+      
     </div>
   </div>
 </template>
-filter: drop-shadow(4px 4px 4px #ffffff);
+
 <script>
-import { Player } from "@/model/index.js";
 import PlayerModeSVG from "@/components/svg/PlayerModeSVG.vue";
+import { getArrayOfNumber, getArrayOfPlayers} from "@/utils"
+import { Player } from "@/model/index.js";
+import { Config } from "@/config.js";
+import { mapState } from "vuex";
 
 export default {
   data() {
     return {
-      numberOfPlayers: 4,
-      players: [new Player(), new Player()],
-      selectedColors: ["", "", "", ""],
-      isRedSelected: false,
-      isBlueSelected: false,
-      isYellowSelected: false,
-      isGreenSelected: false,
+      boardSize: Config.board.size.min,
+      boardSizeOptions: getArrayOfNumber(Config.board.size.min, Config.board.size.max),
+
+      numberOfPlayers: Config.players.number.min,
+      numberOfPlayersOptions: getArrayOfNumber(Config.players.number.min, Config.players.number.max),
+
+      players: getArrayOfPlayers(Config.players.number.min),
+      colorOptions: Object.keys(Config.ballColor).map(color => {
+        return {
+          color: color,
+          disabled: false,
+        };
+      }),
     };
   },
   components: {
     PlayerModeSVG,
   },
-  computed: {},
+  computed: {
+    ...mapState(["isFullyEnterd", ""]),
+  },
   methods: {
-    changeNumberOfPlayers: function (e) {
+    gameStart: function () {
+      this.$store.dispatch("setBoardSize", { boardSize: this.boardSize });
+      this.$store.dispatch("setBoard");
+      this.$store.dispatch("setPlayers", { players: this.players });
+      this.$store.dispatch("toggleTimer");
+    },
+    initializeUser: function (e) {
       this.numberOfPlayers = e.target.value;
 
-      if (this.numberOfPlayers >= this.players.length) {
-        this.players.push(new Player());
-      } else {
-        this.players.pop();
-      }
-    },
-    test() {
-      console.log(this.players);
-    },
-    setTimer() {},
-    initializeColors: function (index, color) {
-      switch (this.selectedColors[index]) {
-        case "Red":
-          this.isRedSelected = false;
-          break;
-        case "Blue":
-          this.isBlueSelected = false;
-          break;
-        case "Yellow":
-          this.isYellowSelected = false;
-          break;
-        case "Green":
-          this.isGreenSelected = false;
-          break;
-      }
-
-      switch (color) {
-        case "Red":
-          this.isRedSelected = true;
-          this.selectedColors[index] = "Red";
-          this.player.color = "Red";
-          break;
-        case "Blue":
-          this.isBlueSelected = true;
-          this.selectedColors[index] = "Blue";
-          this.player.color = "Blue";
-          break;
-        case "Yellow":
-          this.isYellowSelected = true;
-          this.selectedColors[index] = "Yellow";
-          this.player.color = "Yellow";
-          break;
-        case "Green":
-          this.isGreenSelected = true;
-          this.selectedColors[index] = "Green";
-          this.player.color = "Green";
-          break;
+      while(this.numberOfPlayers > this.players.length || this.numberOfPlayers < this.players.length){
+        if(this.numberOfPlayers > this.players.length){
+          this.players.push(new Player())
+        }
+        else if(this.numberOfPlayers < this.players.length){
+          this.players.pop()
+        }
       }
     },
   },
@@ -179,13 +192,28 @@ h2 {
 }
 
 .svg-container {
+  margin-top: 6rem;
   position: relative;
   width: 100%;
 }
 
+.form-select {
+  font-size: 1.2rem;
+}
+
+@media screen and (max-width: 375px) {
+  .svg-container {
+    margin-top: 4rem;
+  }
+
+  .form-check-label {
+    font-size: 0.8rem;
+  }
+}
+
 @media screen and (max-width: 320px) {
   .svg-container {
-    top: 30px;
+    margin-top: 3rem;
   }
 
   .form-check-label {

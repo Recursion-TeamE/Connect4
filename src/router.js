@@ -35,4 +35,9 @@ const router = new VueRouter({
 	routes
 })
 
+// router.beforeEach((to, from, next) => {
+// 	if (to.name === 'gamePage' && from.name === 'playerMode' && !this.$store.state.isFullyEnterd) next({ name: 'playerMode' });
+// 	else next();
+// })
+
 export default router

@@ -1,5 +1,5 @@
 <template>
-  <div class="row align-items-center justify-content-around h-100">
+  <div v-if="isPlayable()" class="row align-items-center justify-content-around h-100">
     <div class="col-md-4 col-sm-3 display-players pb-5">
       <div class="players-turn">
         <h2 class="players-turn-font">{{ currentPlayer.name }}'s turn</h2>
@@ -22,8 +22,13 @@
       "
     >
       <p>Click buttons to play</p>
+      <p>{{ lastBallPosition.rowIndex }}</p>
+      <p>{{ lastBallPosition.colIndex }}</p>
+      <p>{{ lastBallPosition.color }}</p>
+
       <BallSetters />
       <Board class="bg-color mb-sm-2" />
+
     </div>
     <div
       class="
@@ -39,12 +44,35 @@
           <font-awesome-icon icon="hourglass-half" />
           <p>{{ minutes }}:{{ seconds }}</p>
         </div>
-        <button @click="resetData()" class="btn btn-primary">
+        <button @click="resetBoard()" class="btn btn-primary">
           <font-awesome-icon icon="redo-alt" />
         </button>
       </div>
     </div>
+
+    <button @click="verticalEvaluation">vertical</button>
+    <button @click="horizontalEvaluation">horizontal</button>
+    <button @click="rightDiagonalEvaluation">rightD</button>
+    <button @click="leftDiagonalEvaluation">leftD</button>
+
   </div>
+
+  <div v-else class="vh-100 d-flex flex-column justify-content-center align-items-center">
+    <div class="">
+      <h2>Sorry, but you have to go to setting page</h2>
+    </div>
+    <div class="d-flex justify-content-center align-items-center h-50">
+      <div class="btn-container">
+        <router-link to="/setting">
+          <button class="btn btn-primary">
+            Setting Page
+          </button>
+        </router-link>
+      </div>
+    </div>
+  </div>
+
+
 </template>
 
 <script>
@@ -52,6 +80,8 @@ import Board from "@/components/Board.vue";
 import BallSetters from "@/components/BallSetters.vue";
 import TemplateBallSVG from "@/components/svg/TemplateBallSVG.vue";
 import { mapState } from "vuex";
+
+import { Config } from "@/config"
 
 export default {
   components: {
@@ -61,43 +91,244 @@ export default {
   },
   data() {
     return {
-      totalSeconds: 0,
-      minutes: "00",
-      seconds: "00",
-      isRunning: false,
-      interval: null,
+      winnerExist: undefined,
     };
   },
   computed: {
-    ...mapState(["currentPlayer", "players"]),
+    ...mapState([
+      "currentPlayer", 
+      "players", 
+      "lastBallPosition", 
+      "board",
+      "minutes",
+      "seconds",
+    ]),
+    // evaluationMessage(){
+    //   if(this.winnerExist){
+    //     console.log("Display Winner");
+    //   }
+    //   else {
+    //     console.log("It's a draw");
+    //   }
+    // },
   },
   mounted() {
     window.addEventListener("load", this.toggleTimer);
   },
   methods: {
-    resetData: function () {
-      window.location.reload();
+    isPlayable: function(){
+      return(
+        this.$store.state.boardSize >= Config.board.size.min &&
+        this.$store.state.players.length >= Config.players.number.min
+      )
     },
-    toggleTimer: function () {
-      if (this.isRunning) {
-        clearInterval(this.interval);
+    resetBoard: function () {
+      this.$store.dispatch("setBoard");
+      this.$store.dispatch("toggleTimer");
+    },
+    /**
+     * 勝敗チェック
+     */
+    checkWinner() {
+      return (
+        this.verticalEvaluation ||
+        this.horizontalEvaluation ||
+        this.rightDiagonalEvaluation ||
+        this.leftDiagonalEvaluation
+      );
+    },
+    check(n) {
+      console.log(n);
+      if (n >= 4) {
+        console.log("true");
+        return true;
       } else {
-        this.interval = setInterval(this.incrementTime, 1000);
+        console.log("false");
+        return false;
       }
-      this.isRunning = !this.isRunning;
     },
-    incrementTime() {
-      ++this.totalSeconds;
-      this.minutes = this.pad(parseInt(this.totalSeconds / 60)).toString();
-      this.seconds = this.pad(this.totalSeconds % 60).toString();
-    },
-    pad(val) {
-      let valString = val + "";
-      if (valString.length < 2) {
-        return "0" + valString;
+    verticalEvaluation() {
+      const rowIndex = this.lastBallPosition.rowIndex;
+      const colIndex = this.lastBallPosition.colIndex;
+
+      const currColor =
+        this.board[rowIndex][colIndex].color;
+      let stack = 1;
+
+      //落ちた時点で上に積み上がっているものは存在しないはずなので、upperCheckしない
+      const lowerCheck = () => {
+        //縦の下限
+        const limit = this.board.length; // rowIndex+3
+
+        for (let row = rowIndex + 1; row < limit; row++) {
+          const ball = this.board[row][colIndex];
+
+          if (ball.color != currColor) return;
+          else stack++;
+        }
+      };
+
+      lowerCheck();
+
+      if (stack === 4) {
+        console.log("true");
+        return true;
       } else {
-        return valString;
+        console.log("false");
+        return false;
       }
+    },
+    horizontalEvaluation() {
+      const rowIndex = this.lastBallPosition.rowIndex;
+      const colIndex = this.lastBallPosition.colIndex;
+
+      const currColor =this.board[rowIndex][colIndex].color
+      let stack = 1;
+
+      const leftCheck = () => {
+        const limit = 0; // rowIndex-3
+
+        for (let col = colIndex - 1; col >= limit; col--) {
+          const ball = this.board[rowIndex][col];
+
+          if (ball.color === null) return;
+          else if (ball.color != currColor) return;
+          else stack++;
+        }
+      };
+      const rightCheck = () => {
+        //縦の下限
+        const limit = this.board.length; // rowIndex+3
+
+        for (let col = colIndex + 1; col < limit; col++) {
+          const ball = this.board[rowIndex][col];
+
+          if (ball.color === null) return;
+          else if (ball.color != currColor) return;
+          else stack++;
+        }
+      };
+
+      leftCheck();
+      rightCheck();
+
+      this.check(stack);
+    },
+
+    /**
+     *  //右斜め上 (/)
+     *
+     * ________
+     *         |
+     *         |
+     *         |
+     *
+     * */
+    rightDiagonalEvaluation() {
+      
+      const rowIndex = this.lastBallPosition.rowIndex;
+      const colIndex = this.lastBallPosition.colIndex;
+
+      const currColor =
+        this.board[rowIndex][colIndex].color;
+      let stack = 1;
+
+      const upperCheck = () => {
+        const verticalLimit = 0; // rowIndex+3
+        const horizontalLimit = this.board.length; //colIndex+3
+
+        let row = rowIndex - 1;
+        let col = colIndex + 1;
+
+        while (col < horizontalLimit && row >= verticalLimit) {
+          const ball = this.board[row][col];
+
+          if (ball.color === null) return;
+          else if (ball.color != currColor) return;
+          else stack++;
+
+          row--;
+          col++;
+        }
+      };
+
+      const lowerCheck = () => {
+        const verticalLimit = this.board.length; // rowIndex+3
+        const horizontalLimit = 0; //colIndex+3
+
+        let row = rowIndex + 1;
+        let col = colIndex - 1;
+
+        while (col >= horizontalLimit && row < verticalLimit) {
+          const ball = this.board[row][col];
+
+          if (ball.color === null) return;
+          else if (ball.color != currColor) return;
+          else stack++;
+
+          row++;
+          col--;
+        }
+      };
+
+      upperCheck();
+      lowerCheck();
+      this.check(stack);
+    },
+    /**
+     *  //右ななめ下(\) 
+     */
+    leftDiagonalEvaluation() {
+      
+
+      const rowIndex = this.lastBallPosition.rowIndex;
+      const colIndex = this.lastBallPosition.colIndex;
+
+      const currColor =
+        this.board[rowIndex][colIndex].color;
+      let stack = 1;
+
+      const upperCheck = () => {
+        const verticalLimit = 0; // rowIndex+3
+        const horizontalLimit = 0; //colIndex+3
+
+        let row = rowIndex - 1;
+        let col = colIndex - 1;
+
+        while (col >= horizontalLimit && row >= verticalLimit) {
+          const ball = this.board[row][col];
+
+          if (ball.color === null) return;
+          else if (ball.color != currColor) return;
+          else stack++;
+
+          row--;
+          col--;
+        }
+      };
+
+      const lowerCheck = () => {
+        const verticalLimit = this.board.length; // rowIndex+3
+        const horizontalLimit = this.board.length; //colIndex+3
+
+        let row = rowIndex + 1;
+        let col = colIndex + 1;
+
+        while (col < horizontalLimit && row < verticalLimit) {
+          const ball = this.board[row][col];
+
+          if (ball.color === null) return;
+          else if (ball.color != currColor) return;
+          else stack++;
+
+          row++;
+          col++;
+        }
+      };
+
+      upperCheck();
+      lowerCheck();
+      this.check(stack);
     },
   },
 };

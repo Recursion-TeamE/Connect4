@@ -13,115 +13,63 @@
     >
       <defs>
         <linearGradient
-          :id="color.circle2.id"
+          :id="Config.ballColor[color].circle2.id"
           x1="0%"
           y1="0%"
           x2="0%"
           y2="100%"
         >
-          <stop offset="0%" :stop-color="color.circle2.startColor" />
-          <stop offset="100%" :stop-color="color.circle2.endColor" />
+          <stop offset="0%" :stop-color="Config.ballColor[color].circle2.startColor" />
+          <stop offset="100%" :stop-color="Config.ballColor[color].circle2.endColor" />
         </linearGradient>
         <linearGradient
-          :id="color.circle4.id"
+          :id="Config.ballColor[color].circle4.id"
           x1="0%"
           y1="0%"
           x2="0%"
           y2="100%"
         >
-          <stop offset="0%" :stop-color="color.circle4.startColor" />
-          <stop offset="50%" :stop-color="color.circle4.middleColor" />
-          <stop offset="100%" :stop-color="color.circle4.endColor" />
+          <stop offset="0%" :stop-color="Config.ballColor[color].circle4.startColor" />
+          <stop offset="50%" :stop-color="Config.ballColor[color].circle4.middleColor" />
+          <stop offset="100%" :stop-color="Config.ballColor[color].circle4.endColor" />
         </linearGradient>
         <linearGradient
-          :id="color.circle5.id"
+          :id="Config.ballColor[color].circle5.id"
           x1="0%"
           y1="0%"
           x2="0%"
           y2="100%"
         >
-          <stop offset="0%" :stop-color="color.circle5.startColor" />
-          <stop offset="70%" :stop-color="color.circle5.middleColor" />
-          <stop offset="100%" :stop-color="color.circle5.endColor" />
+          <stop offset="0%" :stop-color="Config.ballColor[color].circle5.startColor" />
+          <stop offset="70%" :stop-color="Config.ballColor[color].circle5.middleColor" />
+          <stop offset="100%" :stop-color="Config.ballColor[color].circle5.endColor" />
         </linearGradient>
       </defs>
 
-      <circle cx="100" cy="100" r="100" v-bind:fill="color.circle1.color" />
-      <circle :fill="`url(#${color.circle2.id}`" cx="100" cy="100" r="95" />
-      <circle cx="100" cy="100" r="86" v-bind:fill="color.circle3.color" />
-      <circle :fill="`url(#${color.circle4.id}`" cx="100" cy="100" r="80" />
-      <circle :fill="`url(#${color.circle5.id}`" cx="100" cy="100" r="75" />
+      <circle cx="100" cy="100" r="100" v-bind:fill="Config.ballColor[color].circle1.color" />
+      <circle :fill="`url(#${Config.ballColor[color].circle2.id}`" cx="100" cy="100" r="95" />
+      <circle cx="100" cy="100" r="86" v-bind:fill="Config.ballColor[color].circle3.color" />
+      <circle :fill="`url(#${Config.ballColor[color].circle4.id}`" cx="100" cy="100" r="80" />
+      <circle :fill="`url(#${Config.ballColor[color].circle5.id}`" cx="100" cy="100" r="75" />
     </svg>
   </div>
 </template>
 
 <script>
+
+import {Config} from "@/config";
+
 export default {
+  data(){
+    return{
+      Config: Config
+    }
+  },
   props: {
     color: {
-      circle1: {
-        color: {
-          type: String,
-          required: true,
-        },
-      },
-      circle2: {
-        id: {
-          type: String,
-          required: true,
-        },
-        startColor: {
-          type: String,
-          required: true,
-        },
-        endColor: {
-          type: String,
-          required: true,
-        },
-      },
-      circle3: {
-        color: {
-          type: String,
-          required: true,
-        },
-      },
-      circle4: {
-        id: {
-          type: String,
-          required: true,
-        },
-        startColor: {
-          type: String,
-          equired: true,
-        },
-        middleColor: {
-          type: String,
-          required: true,
-        },
-        endColor: {
-          type: String,
-          required: true,
-        },
-      },
-      circle5: {
-        id: {
-          type: String,
-          required: true,
-        },
-        startColor: {
-          type: String,
-          required: true,
-        },
-        middleColor: {
-          type: String,
-          required: true,
-        },
-        endColor: {
-          type: String,
-          required: true,
-        },
-      },
-    },
+      type: String,
+      required: true,
+    }
   },
   methods: {},
 };
