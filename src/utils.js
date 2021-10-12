@@ -11,7 +11,7 @@ export function getArrayOfNumber(min, max) {
 export function getArrayOfPlayers(n){
 
     const array = [];
-    for (let i = 0; i <= n; i++)array.push(new Player())
+    for (let i = 0; i < n; i++)array.push(new Player())
 
     return array;
 
