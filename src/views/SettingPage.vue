@@ -14,7 +14,8 @@
             <font-awesome-icon icon="user" />
           </button>
         </router-link>
-        <button class="btn btn-primary">
+        <button class="dark disabled btn btn-primary">
+          <p class="tbd-fonts">TBD</p>
           <font-awesome-icon icon="user" />
           vs
           <font-awesome-icon icon="robot" />
@@ -35,6 +36,19 @@ export default {
 </script>
 
 <style scoped>
+.tbd-fonts{
+  font-size: 15px;
+  margin: 0;
+  position: absolute;
+  top: 10px;
+  right: 20px;
+}
+
+.dark{
+  background-color: rgb(172, 170, 170);
+  border-color: rgb(180, 180, 180);
+}
+
 .btn {
   font-size: 2rem;
   padding: 1.5rem;
@@ -42,6 +56,7 @@ export default {
   width: 13rem;
   border-radius: 0.8rem;
   filter: drop-shadow(6px 6px 5px #1b4583);
+  position: relative;
 }
 
 .svg-container {

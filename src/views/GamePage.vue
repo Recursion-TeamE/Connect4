@@ -103,14 +103,6 @@ export default {
       "minutes",
       "seconds",
     ]),
-    // evaluationMessage(){
-    //   if(this.winnerExist){
-    //     console.log("Display Winner");
-    //   }
-    //   else {
-    //     console.log("It's a draw");
-    //   }
-    // },
   },
   mounted() {
     window.addEventListener("load", this.toggleTimer);

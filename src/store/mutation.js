@@ -121,7 +121,7 @@ export default {
 				return;
 			}
 		}
-		state.isFullyEnterd = true;
+		state.isFullyEntered = true;
 		return;
 	},
 	toggleTimer(state) {
