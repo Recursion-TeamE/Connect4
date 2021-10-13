@@ -52,17 +52,14 @@
       </div>
     </div>
 
-    <button @click="verticalEvaluation">vertical</button>
+    <!-- <button @click="verticalEvaluation">vertical</button>
     <button @click="horizontalEvaluation">horizontal</button>
     <button @click="rightDiagonalEvaluation">rightD</button>
     <button @click="leftDiagonalEvaluation">leftD</button>
     <button @click="openWinnerWindow">Winner</button>
-    <button @click="openDrawWindow">Draw</button>
-    <WinnerWindow
-      v-if="winnerExist"
-      @from-display-winner="closeWinnerWindow"
-    />
-    <DrawWindow v-if="isDraw" @from-draw-window="closeDrawWindow" />
+    <button @click="openDrawWindow">Draw</button> -->
+    <WinnerWindow v-if="winnerExist" />
+    <DrawWindow v-if="isDraw" />
   </div>
 
   <div
@@ -103,8 +100,7 @@ export default {
   },
   data() {
     return {
-      winnerExist: undefined,
-      isDraw: undefined, // 引き分けかどうか
+      stack: undefined,
     };
   },
   computed: {
@@ -115,33 +111,19 @@ export default {
       "board",
       "minutes",
       "seconds",
+      "winnerExist",
+      "isDraw",
     ]),
-    // evaluationMessage(){
-    //   if(this.winnerExist){
-    //     console.log("Display Winner");
-    //   }
-    //   else {
-    //     console.log("It's a draw");
-    //   }
-    // },
   },
   mounted() {
     window.addEventListener("load", this.toggleTimer);
   },
   methods: {
     openWinnerWindow: function () {
-      this.winnerExist = true;
-    },
-    closeWinnerWindow: function () {
-      this.winnerExist = false;
-      this.resetBoard();
+      this.$store.dispatch("openWinnerWindow");
     },
     openDrawWindow: function () {
-      this.isDraw = true;
-    },
-    closeDrawWindow: function () {
-      this.isDraw = false;
-      this.resetBoard();
+      this.$store.dispatch("openDrawWindow");
     },
     isPlayable: function () {
       return (
@@ -152,204 +134,6 @@ export default {
     resetBoard: function () {
       this.$store.dispatch("setBoard");
       this.$store.dispatch("toggleTimer");
-    },
-    /**
-     * 勝敗チェック
-     */
-    checkWinner() {
-      return (
-        this.verticalEvaluation ||
-        this.horizontalEvaluation ||
-        this.rightDiagonalEvaluation ||
-        this.leftDiagonalEvaluation
-      );
-    },
-    check(n) {
-      console.log(n);
-      if (n >= 4) {
-        console.log("true");
-        return true;
-      } else {
-        console.log("false");
-        return false;
-      }
-    },
-    verticalEvaluation() {
-      const rowIndex = this.lastBallPosition.rowIndex;
-      const colIndex = this.lastBallPosition.colIndex;
-
-      const currColor = this.board[rowIndex][colIndex].color;
-      let stack = 1;
-
-      //落ちた時点で上に積み上がっているものは存在しないはずなので、upperCheckしない
-      const lowerCheck = () => {
-        //縦の下限
-        const limit = this.board.length; // rowIndex+3
-
-        for (let row = rowIndex + 1; row < limit; row++) {
-          const ball = this.board[row][colIndex];
-
-          if (ball.color != currColor) return;
-          else stack++;
-        }
-      };
-
-      lowerCheck();
-
-      if (stack === 4) {
-        console.log("true");
-        return true;
-      } else {
-        console.log("false");
-        return false;
-      }
-    },
-    horizontalEvaluation() {
-      const rowIndex = this.lastBallPosition.rowIndex;
-      const colIndex = this.lastBallPosition.colIndex;
-
-      const currColor = this.board[rowIndex][colIndex].color;
-      let stack = 1;
-
-      const leftCheck = () => {
-        const limit = 0; // rowIndex-3
-
-        for (let col = colIndex - 1; col >= limit; col--) {
-          const ball = this.board[rowIndex][col];
-
-          if (ball.color === null) return;
-          else if (ball.color != currColor) return;
-          else stack++;
-        }
-      };
-      const rightCheck = () => {
-        //縦の下限
-        const limit = this.board.length; // rowIndex+3
-
-        for (let col = colIndex + 1; col < limit; col++) {
-          const ball = this.board[rowIndex][col];
-
-          if (ball.color === null) return;
-          else if (ball.color != currColor) return;
-          else stack++;
-        }
-      };
-
-      leftCheck();
-      rightCheck();
-
-      this.check(stack);
-    },
-
-    /**
-     *  //右斜め上 (/)
-     *
-     * ________
-     *         |
-     *         |
-     *         |
-     *
-     * */
-    rightDiagonalEvaluation() {
-      const rowIndex = this.lastBallPosition.rowIndex;
-      const colIndex = this.lastBallPosition.colIndex;
-
-      const currColor = this.board[rowIndex][colIndex].color;
-      let stack = 1;
-
-      const upperCheck = () => {
-        const verticalLimit = 0; // rowIndex+3
-        const horizontalLimit = this.board.length; //colIndex+3
-
-        let row = rowIndex - 1;
-        let col = colIndex + 1;
-
-        while (col < horizontalLimit && row >= verticalLimit) {
-          const ball = this.board[row][col];
-
-          if (ball.color === null) return;
-          else if (ball.color != currColor) return;
-          else stack++;
-
-          row--;
-          col++;
-        }
-      };
-
-      const lowerCheck = () => {
-        const verticalLimit = this.board.length; // rowIndex+3
-        const horizontalLimit = 0; //colIndex+3
-
-        let row = rowIndex + 1;
-        let col = colIndex - 1;
-
-        while (col >= horizontalLimit && row < verticalLimit) {
-          const ball = this.board[row][col];
-
-          if (ball.color === null) return;
-          else if (ball.color != currColor) return;
-          else stack++;
-
-          row++;
-          col--;
-        }
-      };
-
-      upperCheck();
-      lowerCheck();
-      this.check(stack);
-    },
-    /**
-     *  //右ななめ下(\)
-     */
-    leftDiagonalEvaluation() {
-      const rowIndex = this.lastBallPosition.rowIndex;
-      const colIndex = this.lastBallPosition.colIndex;
-
-      const currColor = this.board[rowIndex][colIndex].color;
-      let stack = 1;
-
-      const upperCheck = () => {
-        const verticalLimit = 0; // rowIndex+3
-        const horizontalLimit = 0; //colIndex+3
-
-        let row = rowIndex - 1;
-        let col = colIndex - 1;
-
-        while (col >= horizontalLimit && row >= verticalLimit) {
-          const ball = this.board[row][col];
-
-          if (ball.color === null) return;
-          else if (ball.color != currColor) return;
-          else stack++;
-
-          row--;
-          col--;
-        }
-      };
-
-      const lowerCheck = () => {
-        const verticalLimit = this.board.length; // rowIndex+3
-        const horizontalLimit = this.board.length; //colIndex+3
-
-        let row = rowIndex + 1;
-        let col = colIndex + 1;
-
-        while (col < horizontalLimit && row < verticalLimit) {
-          const ball = this.board[row][col];
-
-          if (ball.color === null) return;
-          else if (ball.color != currColor) return;
-          else stack++;
-
-          row++;
-          col++;
-        }
-      };
-
-      upperCheck();
-      lowerCheck();
-      this.check(stack);
     },
   },
 };

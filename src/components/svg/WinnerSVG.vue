@@ -2,8 +2,8 @@
   <div class="d-flex justify-content-center align-items-center">
     <div>
       <svg
-        viewBox="0 0 200 60"
-        width="200"
+        viewBox="0 0 300 60"
+        width="300"
         height="60"
         xmlns="http://www.w3.org/2000/svg"
       >
@@ -109,11 +109,12 @@
 
 <script>
 export default {
-  data() {
-    return {
-      winner: "Player1",
-    };
-  },
+  props: {
+    winner: {
+      type: String,
+      required: true,
+    }
+  }
 };
 </script>
 
