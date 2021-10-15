@@ -1,7 +1,10 @@
 <template>
-  <div class="row align-items-center justify-content-around h-100">
+  <div
+    v-if="isPlayable()"
+    class="row align-items-center justify-content-around h-100"
+  >
     <div class="col-md-4 col-sm-3 display-players pb-5">
-      <div class="players-turn">
+      <div class="players-turn my-4">
         <h2 class="players-turn-font">{{ currentPlayer.name }}'s turn</h2>
       </div>
       <div v-for="(player, index) in players" :key="player.index">
@@ -22,6 +25,7 @@
       "
     >
       <p>Click buttons to play</p>
+
       <BallSetters />
       <Board class="bg-color mb-sm-2" />
     </div>
@@ -39,9 +43,34 @@
           <font-awesome-icon icon="hourglass-half" />
           <p>{{ minutes }}:{{ seconds }}</p>
         </div>
-        <button @click="resetData()" class="btn btn-primary">
+        <button @click="resetBoard()" class="btn btn-primary">
           <font-awesome-icon icon="redo-alt" />
         </button>
+      </div>
+    </div>
+
+    <!-- <button @click="verticalEvaluation">vertical</button>
+    <button @click="horizontalEvaluation">horizontal</button>
+    <button @click="rightDiagonalEvaluation">rightD</button>
+    <button @click="leftDiagonalEvaluation">leftD</button>
+    <button @click="openWinnerWindow">Winner</button>
+    <button @click="openDrawWindow">Draw</button> -->
+    <WinnerWindow v-if="winnerExist" />
+    <DrawWindow v-if="isDraw" />
+  </div>
+
+  <div
+    v-else
+    class="vh-100 d-flex flex-column justify-content-center align-items-center"
+  >
+    <div class="">
+      <h2>Sorry, but you have to go to setting page</h2>
+    </div>
+    <div class="d-flex justify-content-center align-items-center h-50">
+      <div class="btn-container">
+        <router-link to="/setting">
+          <button class="btn btn-primary">Setting Page</button>
+        </router-link>
       </div>
     </div>
   </div>
@@ -51,53 +80,50 @@
 import Board from "@/components/Board.vue";
 import BallSetters from "@/components/BallSetters.vue";
 import TemplateBallSVG from "@/components/svg/TemplateBallSVG.vue";
+
 import { mapState } from "vuex";
+
+import { Config } from "@/config";
+import WinnerWindow from "../components/WinnerWindow.vue";
+import DrawWindow from "../components/DrawWindow.vue";
 
 export default {
   components: {
     Board,
     BallSetters,
     TemplateBallSVG,
+    WinnerWindow,
+    DrawWindow,
   },
   data() {
     return {
-      totalSeconds: 0,
-      minutes: "00",
-      seconds: "00",
-      isRunning: false,
-      interval: null,
+      stack: undefined,
     };
   },
   computed: {
-    ...mapState(["currentPlayer", "players"]),
+    ...mapState([
+      "currentPlayer",
+      "players",
+      "board",
+      "minutes",
+      "seconds",
+      "winnerExist",
+      "isDraw",
+    ]),
   },
   mounted() {
     window.addEventListener("load", this.toggleTimer);
   },
   methods: {
-    resetData: function () {
-      window.location.reload();
+    isPlayable: function () {
+      return (
+        this.$store.state.boardSize >= Config.board.size.min &&
+        this.$store.state.players.length >= Config.players.number.min
+      );
     },
-    toggleTimer: function () {
-      if (this.isRunning) {
-        clearInterval(this.interval);
-      } else {
-        this.interval = setInterval(this.incrementTime, 1000);
-      }
-      this.isRunning = !this.isRunning;
-    },
-    incrementTime() {
-      ++this.totalSeconds;
-      this.minutes = this.pad(parseInt(this.totalSeconds / 60)).toString();
-      this.seconds = this.pad(this.totalSeconds % 60).toString();
-    },
-    pad(val) {
-      let valString = val + "";
-      if (valString.length < 2) {
-        return "0" + valString;
-      } else {
-        return valString;
-      }
+    resetBoard: function () {
+      this.$store.dispatch("setBoard");
+      this.$store.dispatch("toggleTimer");
     },
   },
 };

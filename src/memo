@@ -1,0 +1,68 @@
+Winner Algorithm
+
+条件
+・水平方向のセグメントが４つある or
+・垂直方向のセグメントが４つある or
+・左斜め方向のセグメントが４つある or
+・右斜め方向のセグメントが４つある
+
+ボード上のすべてをチェックするのは無駄 → 特にはじまりと最後
+
+なので、ボードに落ちた最後のボールの位置をデータとして持っておく
+最後のボールを焦点として扱うことで計算回数を減らせる
+
+e.g.
+勝敗判定に必要なデータ
+lastBallPosition : { 
+int rowindex, 
+int colindex,
+string color
+}
+ターン終了時に入れ替える
+
+checkWinner関数(obj {lastBallPosition}) {
+
+return verticalEvaluation(obj {lastBallPosition}) || horizontalEvaluation() || rightDiagonalEvaluation() || leftDiagonalEvaluation();
+
+}
+
+verticalEvaluation boolean ({row, col, color},[row-1, col],[row-2, col],[row-3, col])
+引数1: 最後のボールの情報 row = 3, col = 2
+引数2: row+1 = 4, col = 2
+引数3: row-1 = 2, col = 2
+引数4: row-2 = 1, col = 2
+
+
+{color : amount} 
+color.get == 4? 
+
+horizontalEvaluation boolean ({row, col, color},[row, col+1],[row, col+2],[row, col+3])
+
+rightDiagonalEvaluation boolean ({row, col, color},[row+1, col+1],[row+2, col+2],[row+3, col+3])
+
+leftDiagonalEvaluation boolean ({row, col, color},[row-1, col-1],[row-2, col-2],[row-3, col-3])
+
+
+[0 ~ 3], [1 ~ 4]
+
+# row0
+[
+  # col0, col1, col2, col3, col4
+  [],[],[最後のボール（赤）],[],[] 
+]
+# row1
+[
+  [],[],[赤],[],[]
+]
+# row2
+[
+  [],[],[赤],[],[]
+]
+# row3
+[
+  [],[],[赤],[],[]
+]
+#row4
+[
+  [],[],[],[],[]
+]
