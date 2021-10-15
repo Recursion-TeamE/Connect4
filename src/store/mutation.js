@@ -1,36 +1,75 @@
 import { Ball } from "../model/index";
 import { Evaluation } from "@/model/evaluation"
 export default {
-  /**
+  /****************************
    * setter
-   */
+   ****************************/
+  setNewGame() {
+    this.commit("setBoardSize", { number: 0 });
+    this.commit("setBoard")
+    this.commit("setLastBallPosition", { lastBallPosition: {} });
+
+    this.commit("setPlayers", { players: [] });
+    this.commit("setCurrentPlayerIndex", { number: 0 });
+    
+    this.commit("setTotalSeconds", { number: 0 });
+    this.commit("setMinutes", { string: "00" });
+    this.commit("setSeconds", { string: "00" });
+    this.commit("setInterval", { interval: null });
+    
+    this.commit("setWinnerExist", { bool: false });
+    this.commit("setIsDraw", { bool: false });
+    
+    this.commit("setIsRunning", { bool: false });
+    this.commit("setIsDropping", { bool: false });
+    this.commit("setIsFullyEntered", { bool: false });
+
+    this.commit("setWinnerExist", { bool: false})
+    this.commit("setIsDraw", { bool: false})
+  },
   setBoardSize(state, { boardSize }) {
     state.boardSize = boardSize;
   },
-  initializeGame(state) {
-    state.players = []
-    state.board = []
-    state.boardSize = 0
-
-    state.currentPlayerIndex = 0
-    state.currentPlayer = {}
-    state.lastBallPosition = {}
-
-    state.isFullyEnterd = false
-    state.isDropping = false
-
-    state.totalSeconds = 0
-    state.minutes = "00"
-    state.seconds = "00"
-    state.isRunning = false
-    state.interval = null
-
-    this.commit("initEvaluationStatus")
+  setCurrentPlayerIndex(state, { number }) {
+    state.currentPlayerIndex = number;
   },
-
-  initEvaluationStatus(state) {
-    state.winnerExist = false;
-    state.isDraw = false;
+  setCurrentPlayer(state, { player }) {
+    state.currentPlayer = player;
+  },
+  setLastBallPosition(state, { lastBallPosition }) {
+    state.lastBallPosition = lastBallPosition;
+  },
+  setIsFullyEntered(state, { bool }) {
+    state.isFullyEnterd = bool;
+  },
+  setIsDropping(state, { bool }) {
+    state.isDropping = bool;
+  },
+  setTotalSeconds(state, { number }) {
+    state.totalSeconds = number;
+  },
+  setMinutes(state, { string }) {
+    state.minutes = string;
+  },
+  setSeconds(state, { string }) {
+    state.seconds = string;
+  },
+  setIsRunning(state, { bool }) {
+    state.isRunning = bool;
+  },
+  setInterval(state, { interval }) {
+    state.interval = interval;
+  },
+  setWinnerExist(state, { bool }) {
+    state.winnerExist = bool;
+  },
+  setIsDraw(state, { bool }) {
+    state.isDraw = bool;
+  },
+  setPlayers(state, { players }) {
+    state.players = players;
+    this.commit("setCurrentPlayerIndex", { number: 0 })
+    this.commit("setCurrentPlayer", { player: players[0] })
   },
   setBoard(state) {
 
@@ -50,10 +89,7 @@ export default {
   setBall(state, { rowIndex, colIndex, color }) {
 
     const nextStep = () => {
-
-      // //lastballposition を保存する
-      // state.lastBallPosition = new lastBallPosition(rowIndex, colIndex, color);
-      rowIndex--
+      rowIndex--;
 
       state.winnerExist = new Evaluation(
         state.board,
@@ -61,53 +97,39 @@ export default {
         colIndex,
       ).checkWinner();
 
-      //winnerExsitはGamePageのv-ifで使われてる。
-      if (state.winnerExist) {
-        //drawの処理
-        return;
-      }
-      else if (state.isDraw) {
-        return;
-      }
+      if (state.winnerExist || state.isDraw) return;
 
 
       this.commit("turnChange", {
         rowIndex: rowIndex,
         colIndex: colIndex,
-        colorString: color
+        colorString: color,
       });
-      state.isDropping = false;
     }
 
 
+    this.commit("setIsDropping", { bool: true })
     const l = state.board.length;
-    state.isDropping = true;
+    const getBall = ()=> state.board[rowIndex][colIndex];
 
-    if (rowIndex >= l) {
-      nextStep()
+    //ベースケース
+    if (rowIndex >= l || getBall().color !== null) {
+      this.commit("setIsDropping", { bool: false })
+      nextStep();
       return;
     }
 
-    const ball = state.board[rowIndex][colIndex];
-
-    //ボールがすでにある時return
-    if (ball.color !== null) {
-      nextStep()
-      return;
-    }
-
+    
     // rowindexが0の時以外は上の色を変える。
     if (rowIndex !== 0) {
       const ballAbove = state.board[rowIndex - 1][colIndex];
       ballAbove.color = null;
     }
-
+    
+    const ball = getBall();
     ball.color = color;
 
     const store = this;
-
-    console.log(rowIndex);
-
     setTimeout(function () {
       store.commit("setBall", {
         rowIndex: rowIndex + 1,
@@ -116,15 +138,9 @@ export default {
       });
     }, 300);
   },
-  setPlayers(state, { players }) {
-    state.players = players;
-    state.currentPlayer = players[0];
-    state.currentPlayerIndex = 0;
-  },
-
-  /**
+  /*************************
    * else
-   */
+   *************************/
   turnChange(state) {
 
     state.currentPlayerIndex++;
@@ -178,17 +194,5 @@ export default {
     state.interval = setInterval(incrementTime, 1000);
 
   },
-  openWinnerWindow(state) {
-    state.winnerExist = true;
-  },
-  closeWinnerWindow(state) {
-    state.winnerExist = false;
-  },
-  openDrawWindow(state) {
-    state.isDraw = true;
-  },
-  closeDrawWindow(state) {
-    state.isDraw = false;
-  }
 
 };

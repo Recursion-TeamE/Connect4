@@ -4,8 +4,6 @@ import { lastBallPosition } from "@/model/index";
 export class Evaluation {
   constructor(board, rowIndex, colIndex) {
     this.board = board;
-    console.log(board[rowIndex])
-    console.log(rowIndex)
     this.currentBall = board[rowIndex][colIndex];
     this.lastBallPosition = new lastBallPosition(rowIndex, colIndex, this.currentBall.color);
     this.stack = 1;

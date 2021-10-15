@@ -25,11 +25,12 @@
 <script>
 export default {
   methods: {
-    initializeGame: function () {
-      this.$store.dispatch("initializeGame");
+    setNewGame: function () {
+      this.$store.dispatch("setNewGame");
     },
     retryGame: function () {
-      this.$store.dispatch("initEvaluationStatus");
+      this.$store.dispatch("setWinnerExist", { bool: false});
+      this.$store.dispatch("setIsDraw", { bool: false});
       this.$store.dispatch("setBoard");
       this.$store.dispatch("toggleTimer");
     },

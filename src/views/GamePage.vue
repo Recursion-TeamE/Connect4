@@ -25,9 +25,6 @@
       "
     >
       <p>Click buttons to play</p>
-      <p>{{ lastBallPosition.rowIndex }}</p>
-      <p>{{ lastBallPosition.colIndex }}</p>
-      <p>{{ lastBallPosition.color }}</p>
 
       <BallSetters />
       <Board class="bg-color mb-sm-2" />
@@ -107,7 +104,6 @@ export default {
     ...mapState([
       "currentPlayer",
       "players",
-      "lastBallPosition",
       "board",
       "minutes",
       "seconds",
@@ -119,12 +115,6 @@ export default {
     window.addEventListener("load", this.toggleTimer);
   },
   methods: {
-    openWinnerWindow: function () {
-      this.$store.dispatch("openWinnerWindow");
-    },
-    openDrawWindow: function () {
-      this.$store.dispatch("openDrawWindow");
-    },
     isPlayable: function () {
       return (
         this.$store.state.boardSize >= Config.board.size.min &&

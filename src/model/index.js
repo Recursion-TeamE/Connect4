@@ -5,8 +5,10 @@ export class Player {
 	}
 }
 export class Ball {
-	constructor(color = null) {
+	constructor(rowIndex, colIndex, color = null) {
 		this.color = color;
+		this.rowIndex = rowIndex;
+		this.colIndex = colIndex;
 	}
 }
 
