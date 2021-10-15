@@ -1,5 +1,5 @@
 export class Player {
-	constructor(name = "player", color="red") {
+	constructor(name = "", color="") {
 		this.name = name;
 		this.color = color;
 	}
