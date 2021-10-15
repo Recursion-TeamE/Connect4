@@ -11,7 +11,7 @@
   >
     <div>
       <div v-if="errors.length" class="alert alert-danger">
-        <p>Please correct the following error(s):</p>
+        <h3>Please correct the following error(s):</h3>
         <div v-for="error in errors" :key="error">
           {{ error }}
         </div>
@@ -160,7 +160,7 @@ export default {
     ...mapState(["isFullyEnterd", ""]),
   },
   methods: {
-    gameStart: function () {
+    gameStart: function() {
       if (!this.validationCheck()) return;
       this.$router.push("/setting/playerMode/game");
       this.$store.dispatch("setBoardSize", { boardSize: this.boardSize });
@@ -168,7 +168,7 @@ export default {
       this.$store.dispatch("setPlayers", { players: this.players });
       this.$store.dispatch("toggleTimer");
     },
-    initializeUser: function (e) {
+    initializeUser: function(e) {
       this.numberOfPlayers = e.target.value;
 
       while (
