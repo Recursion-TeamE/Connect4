@@ -194,5 +194,4 @@ export default {
     state.interval = setInterval(incrementTime, 1000);
 
   },
-
 };

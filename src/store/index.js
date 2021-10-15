@@ -16,8 +16,7 @@ export default new Vuex.Store({
 		currentPlayerIndex: 0,
 		currentPlayer: {},
 		lastBallPosition: {},
-
-		isFullyEnterd: false,
+		isFullyEntered: false,
 		isDropping: false,
 
 		totalSeconds: 0,
