@@ -16,7 +16,6 @@ export default new Vuex.Store({
 		currentPlayerIndex: 0,
 		currentPlayer: {},
 		lastBallPosition: {},
-		
 		isFullyEntered: false,
 		isDropping: false,
 
@@ -25,6 +24,9 @@ export default new Vuex.Store({
 		seconds: "00",
 		isRunning: false,
 		interval: null,
+
+		winnerExist: undefined,
+		isDraw: undefined, // 引き分けかどうか
 	},
 	mutations: mutations,
 	actions: actions,
