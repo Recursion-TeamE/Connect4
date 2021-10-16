@@ -1,32 +1,9 @@
 import { Ball } from "../model/index";
-import { Evaluation } from "@/model/Evaluation"
+import { Evaluation } from "@/model/evaluation"
 export default {
   /****************************
    * setter
    ****************************/
-  setNewGame() {
-    this.commit("setBoardSize", { number: 0 });
-    this.commit("setBoard")
-    this.commit("setLastBallPosition", { lastBallPosition: {} });
-
-    this.commit("setPlayers", { players: [] });
-    this.commit("setCurrentPlayerIndex", { number: 0 });
-    
-    this.commit("setTotalSeconds", { number: 0 });
-    this.commit("setMinutes", { string: "00" });
-    this.commit("setSeconds", { string: "00" });
-    this.commit("setInterval", { interval: null });
-    
-    this.commit("setWinnerExist", { bool: false });
-    this.commit("setIsDraw", { bool: false });
-    
-    this.commit("setIsRunning", { bool: false });
-    this.commit("setIsDropping", { bool: false });
-    this.commit("setIsFullyEntered", { bool: false });
-
-    this.commit("setWinnerExist", { bool: false})
-    this.commit("setIsDraw", { bool: false})
-  },
   setBoardSize(state, { boardSize }) {
     state.boardSize = boardSize;
   },

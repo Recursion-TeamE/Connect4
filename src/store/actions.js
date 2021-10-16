@@ -1,6 +1,26 @@
 export default {
-  serNewGame(context) {
-    context.commit("serNewGame");
+  setNewGame(context) {
+    context.commit("setBoardSize", { number: 0 });
+    context.commit("setBoard")
+    context.commit("setLastBallPosition", { lastBallPosition: {} });
+
+    context.commit("setPlayers", { players: [] });
+    context.commit("setCurrentPlayerIndex", { number: 0 });
+    
+    context.commit("setTotalSeconds", { number: 0 });
+    context.commit("setMinutes", { string: "00" });
+    context.commit("setSeconds", { string: "00" });
+    context.commit("setInterval", { interval: null });
+    
+    context.commit("setWinnerExist", { bool: false });
+    context.commit("setIsDraw", { bool: false });
+    
+    context.commit("setIsRunning", { bool: false });
+    context.commit("setIsDropping", { bool: false });
+    context.commit("setIsFullyEntered", { bool: false });
+
+    context.commit("setWinnerExist", { bool: false})
+    context.commit("setIsDraw", { bool: false})
   },
   setBoard(context, payload) {
     context.commit("setBoard", payload);
