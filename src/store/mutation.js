@@ -1,5 +1,5 @@
 import { Ball } from "../model/index";
-import { Evaluation } from "@/model/evaluation"
+import { Evaluation } from "@/model/Evaluation"
 export default {
   /****************************
    * setter

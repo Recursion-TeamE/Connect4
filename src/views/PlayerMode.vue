@@ -10,19 +10,20 @@
     "
   >
     <div>
-
-
-
+      <div v-if="errors.length" class="alert alert-danger">
+        <h3>Please correct the following error(s):</h3>
+        <div v-for="error in errors" :key="error">
+          {{ error }}
+        </div>
+      </div>
       <div class="svg-container mb-4">
         <PlayerModeSVG class="svg-text" />
       </div>
 
-
       <form class="d-flex flex-column align-items-center">
-
         <!-- 
         Board Size
-         -->
+        -->
         <div class="col-10 col-sm-8 mt-5">
           <label for="boardSize" class="form-label">Board Size</label>
           <select
@@ -36,19 +37,23 @@
           </select>
         </div>
 
-
         <!-- 
         Number of Player
-         -->
+        -->
         <div class="col-10 col-sm-8 mt-3">
-          <label for="numberOfPlayers" class="form-check-label p-1">Number of Players</label>
+          <label for="numberOfPlayers" class="form-check-label p-1"
+            >Number of Players</label
+          >
           <select
             class="form-select p-1 col-12 text-center"
             id="numberOfPlayers"
             @change="initializeUser($event)"
             v-model="numberOfPlayers"
           >
-            <option v-for="(option, index) in numberOfPlayersOptions" :key="index">
+            <option
+              v-for="(option, index) in numberOfPlayersOptions"
+              :key="index"
+            >
               {{ option }}
             </option>
           </select>
@@ -56,11 +61,10 @@
 
         <!-- 
         Player Setting
-         -->
+        -->
         <div class="my-3">
           <h2>Player Setting</h2>
         </div>
-
 
         <div
           v-for="(player, index) in players"
@@ -68,7 +72,9 @@
           class="d-flex justify-content-around col-12 col-sm-8 mb-3"
         >
           <div class="col-6">
-            <label class="form-check-label" for="playersName">Player's Name</label>
+            <label class="form-check-label" for="playersName"
+              >Player's Name</label
+            >
             <input
               v-model="player.name"
               type="text"
@@ -78,7 +84,9 @@
           </div>
 
           <div class="col-6">
-            <label class="form-check-label" for="playersColer">Player's Color</label>
+            <label class="form-check-label" for="playersColer"
+              >Player's Color</label
+            >
             <select
               class="form-select p-1"
               v-model="player.color"
@@ -89,8 +97,6 @@
                 v-for="(colorOption, index) in colorOptions"
                 :key="index"
                 :value="colorOption.color"
-                :disabled="colorOption.disabled"
-                @change="selectColor($event)"
               >
                 {{ colorOption.color }}
               </option>
@@ -98,35 +104,27 @@
           </div>
         </div>
 
-
         <!-- 
           Game start
         -->
         <div>
-          <router-link to="/setting/playerMode/game">
-            <button
-              type="submit"
-              class="btn btn-primary mt-3"
-              @click="gameStart"
-            >
-              Game Start
-            </button>
-          </router-link>
+          <button
+            type="submit"
+            class="btn btn-primary mt-3"
+            @click="gameStart()"
+          >
+            Game Start
+          </button>
         </div>
-
-
-
-
       </form>
-
-      
     </div>
   </div>
 </template>
 
 <script>
 import PlayerModeSVG from "@/components/svg/PlayerModeSVG.vue";
-import { getArrayOfNumber, getArrayOfPlayers} from "@/utils"
+import { getArrayOfNumber, getArrayOfPlayers } from "@/utils";
+import { PlayerModeValidation } from "@/model/validation";
 import { Player } from "@/model/index.js";
 import { Config } from "@/config.js";
 import { mapState } from "vuex";
@@ -135,18 +133,24 @@ export default {
   data() {
     return {
       boardSize: Config.board.size.min,
-      boardSizeOptions: getArrayOfNumber(Config.board.size.min, Config.board.size.max),
+      boardSizeOptions: getArrayOfNumber(
+        Config.board.size.min,
+        Config.board.size.max
+      ),
 
       numberOfPlayers: Config.players.number.min,
-      numberOfPlayersOptions: getArrayOfNumber(Config.players.number.min, Config.players.number.max),
+      numberOfPlayersOptions: getArrayOfNumber(
+        Config.players.number.min,
+        Config.players.number.max
+      ),
 
       players: getArrayOfPlayers(Config.players.number.min),
-      colorOptions: Object.keys(Config.ballColor).map(color => {
+      colorOptions: Object.keys(Config.ballColor).map((color) => {
         return {
           color: color,
-          disabled: false,
         };
       }),
+      errors: [],
     };
   },
   components: {
@@ -156,23 +160,38 @@ export default {
     ...mapState(["isFullyEnterd", ""]),
   },
   methods: {
-    gameStart: function () {
+    gameStart: function() {
+      if (!this.validationCheck()) return;
+      this.$router.push("/setting/playerMode/game");
       this.$store.dispatch("setBoardSize", { boardSize: this.boardSize });
       this.$store.dispatch("setBoard");
       this.$store.dispatch("setPlayers", { players: this.players });
       this.$store.dispatch("toggleTimer");
     },
-    initializeUser: function (e) {
+    initializeUser: function(e) {
       this.numberOfPlayers = e.target.value;
 
-      while(this.numberOfPlayers > this.players.length || this.numberOfPlayers < this.players.length){
-        if(this.numberOfPlayers > this.players.length){
-          this.players.push(new Player())
-        }
-        else if(this.numberOfPlayers < this.players.length){
-          this.players.pop()
+      while (
+        this.numberOfPlayers > this.players.length ||
+        this.numberOfPlayers < this.players.length
+      ) {
+        if (this.numberOfPlayers > this.players.length) {
+          this.players.push(new Player());
+        } else if (this.numberOfPlayers < this.players.length) {
+          this.players.pop();
         }
       }
+    },
+    validationCheck() {
+      const validation = new PlayerModeValidation(this.players);
+      const isNameNotBlank = validation.isNotBlank("name");
+      const isColorNotBlank = validation.isNotBlank("color");
+      const isNameUnique = validation.isUnique("name");
+      const isColorUnique = validation.isUnique("color");
+
+      this.errors = validation.getErrors();
+      console.log(this.errors);
+      return isNameUnique && isNameNotBlank && isColorUnique && isColorNotBlank;
     },
   },
 };

@@ -1,7 +1,7 @@
 <template>
-  <div
+  <main
     v-if="isPlayable()"
-    class="row align-items-center justify-content-around h-100"
+    class="row align-items-center justify-content-around vh-100"
   >
     <div class="col-md-4 col-sm-3 display-players pb-5">
       <div class="players-turn my-4">
@@ -57,23 +57,23 @@
     <button @click="openDrawWindow">Draw</button> -->
     <WinnerWindow v-if="winnerExist" />
     <DrawWindow v-if="isDraw" />
-  </div>
+  </main>
 
-  <div
+  <main
     v-else
     class="vh-100 d-flex flex-column justify-content-center align-items-center"
   >
     <div class="">
       <h2>Sorry, but you have to go to setting page</h2>
     </div>
-    <div class="d-flex justify-content-center align-items-center h-50">
+    <div class="d-flex justify-content-center align-items-center">
       <div class="btn-container">
         <router-link to="/setting">
           <button class="btn btn-primary">Setting Page</button>
         </router-link>
       </div>
     </div>
-  </div>
+  </main>
 </template>
 
 <script>
