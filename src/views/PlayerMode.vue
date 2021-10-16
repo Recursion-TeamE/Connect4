@@ -20,7 +20,7 @@
         <PlayerModeSVG class="svg-text" />
       </div>
 
-      <form class="d-flex flex-column align-items-center">
+      <div class="d-flex flex-column align-items-center">
         <!-- 
         Board Size
         -->
@@ -109,14 +109,13 @@
         -->
         <div>
           <button
-            type="submit"
             class="btn btn-primary mt-3"
             @click="gameStart()"
           >
             Game Start
           </button>
         </div>
-      </form>
+      </div>
     </div>
   </div>
 </template>
@@ -161,12 +160,13 @@ export default {
   },
   methods: {
     gameStart: function() {
-      if (!this.validationCheck()) return;
-      this.$router.push("/setting/playerMode/game");
-      this.$store.dispatch("setBoardSize", { boardSize: this.boardSize });
-      this.$store.dispatch("setBoard");
-      this.$store.dispatch("setPlayers", { players: this.players });
-      this.$store.dispatch("toggleTimer");
+      if (this.validationCheck()){
+        this.$router.push("/setting/playerMode/game");
+        this.$store.dispatch("setBoardSize", { boardSize: this.boardSize });
+        this.$store.dispatch("setBoard");
+        this.$store.dispatch("setPlayers", { players: this.players });
+        this.$store.dispatch("toggleTimer");
+      }
     },
     initializeUser: function(e) {
       this.numberOfPlayers = e.target.value;
