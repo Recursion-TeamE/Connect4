@@ -1,5 +1,9 @@
 module.exports = {
-	publicPath: './',
+	publicPath: process.env.NODE_ENV === 'production'
+    ? '/Connect4/'
+    : '/'
+,
+	assetsDir: './',
 	chainWebpack: (config) => {
 		const svgRule = config.module.rule('svg');
 
